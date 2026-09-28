@@ -152,7 +152,7 @@ export default function TestExecutionPage() {
             const ascKg = Number(row.asc);
             const descKg = Number(row.desc);
 
-            const mpe_e = getMPE(loadKg * 1000, cls, eG);
+            const mpe_e = getMPE(loadKg * 1000, eG, cls);
             const mpeKg = (mpe_e * eG) / 1000;
 
             const errorAsc = !isNaN(ascKg) ? ascKg - loadKg : 0;
@@ -195,7 +195,7 @@ export default function TestExecutionPage() {
         const test4 = testsToRun.find(t => t.id === 4);
         const loadG = test4?.load || (maxKg * 1000) / 3;
         const loadKg = loadG / 1000;
-        const mpe_e = getMPE(loadG, cls, eG);
+        const mpe_e = getMPE(loadG, eG, cls);
         const mpeKg = (mpe_e * eG) / 1000;
 
         let pass = true;
@@ -230,7 +230,7 @@ export default function TestExecutionPage() {
     const calculateTareResults = () => {
         const net = Number(tareReading.net_indication) || 0;
         const tareLoad = Number(tareReading.tare_load) || 0;
-        const mpe_e = getMPE(tareLoad * 1000, cls, eG);
+        const mpe_e = getMPE(tareLoad * 1000, eG, cls);
         const mpeKg = (mpe_e * eG) / 1000;
         const err = net - tareLoad;
         return {

@@ -50,7 +50,10 @@ export function calculateCorrectedError(E, E0 = 0) {
  * MPE Calculation (OIML R-76 Table 6)
  * Supports initial verification and in-service inspection (2x MPE)
  */
-export function getMPE(load_g, e_g, cls, activeRules = null, isInService = false) {
+export function getMPE(load_g, param2, param3, activeRules = null, isInService = false) {
+    let e_g = typeof param2 === 'number' ? param2 : (typeof param3 === 'number' ? param3 : 10);
+    let cls = typeof param2 === 'string' ? param2 : (typeof param3 === 'string' ? param3 : 'Class III');
+    
     const c = normalizeClass(cls);
     const m = load_g / e_g;
     let mult = 0;
