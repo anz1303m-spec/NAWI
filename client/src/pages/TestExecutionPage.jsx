@@ -476,10 +476,20 @@ export default function TestExecutionPage() {
 
     const validateCurrentTestStep = () => {
         const testId = currentTest.id;
-        if (testId === 2) {
+        if (testId === 1) {
+            if (!readingProofs["visual_inspection"]) {
+                alert("Please upload/capture the Visual Inspection photo proof before proceeding.");
+                return false;
+            }
+        } else if (testId === 2) {
             for (let load in weighingReadings) {
                 if (weighingReadings[load].asc === '' || weighingReadings[load].desc === '') {
                     alert("Please fill in both ascending and descending readings for all load points before proceeding.");
+                    return false;
+                }
+                if (!readingProofs[`weighing_${load}`]) {
+                    const loadKg = Number(load) / 1000;
+                    alert(`Please upload photo proof for load point ${loadKg >= 1 ? loadKg + ' kg' : load + ' g'} before proceeding.`);
                     return false;
                 }
             }
@@ -487,6 +497,10 @@ export default function TestExecutionPage() {
             for (let k in repeatabilityReadings) {
                 if (repeatabilityReadings[k] === undefined || repeatabilityReadings[k] === '') {
                     alert("Please fill in all repeatability test readings before proceeding.");
+                    return false;
+                }
+                if (!readingProofs[`repeatability_${k}`]) {
+                    alert(`Please upload photo proof for ${k.replace('_', ' ')} before proceeding.`);
                     return false;
                 }
             }
@@ -497,15 +511,27 @@ export default function TestExecutionPage() {
                     alert("Please fill in eccentricity readings for all positions (front, right, rear, left, center) before proceeding.");
                     return false;
                 }
+                if (!readingProofs[`eccentricity_${pos}`]) {
+                    alert(`Please upload photo proof for ${pos.toUpperCase()} position before proceeding.`);
+                    return false;
+                }
             }
         } else if (testId === 5) {
             if (zeroReading.indication === undefined || zeroReading.indication === '') {
                 alert("Please fill in the Zero Indication Reading before proceeding.");
                 return false;
             }
+            if (!readingProofs["zero_setting"]) {
+                alert("Please upload photo proof for Zero Setting before proceeding.");
+                return false;
+            }
         } else if (testId === 6) {
             if (!tareReading.tare_load || !tareReading.net_indication) {
                 alert("Please fill in Tare Load Applied and Net Indication After Tare before proceeding.");
+                return false;
+            }
+            if (!readingProofs["tare_accuracy"]) {
+                alert("Please upload photo proof for Tare Accuracy before proceeding.");
                 return false;
             }
         } else if (testId === 7) {
@@ -519,10 +545,18 @@ export default function TestExecutionPage() {
                     alert(`Enter the indication after adding 1.4d for the ${pt.label} test point.`);
                     return false;
                 }
+                if (!readingProofs[`discrimination_${pt.key}`]) {
+                    alert(`Please upload photo proof for ${pt.label} discrimination test point before proceeding.`);
+                    return false;
+                }
             }
         } else if (testId === 8) {
             if (!tiltReading.ref || !tiltReading.tilt_x || !tiltReading.tilt_y) {
                 alert("Please fill in all Tilt Test observation readings (Level Reference, X-Axis, Y-Axis) before proceeding.");
+                return false;
+            }
+            if (!readingProofs["tilt_test"]) {
+                alert("Please upload photo proof for Tilt Test before proceeding.");
                 return false;
             }
         } else if (testId === 9) {
@@ -543,11 +577,23 @@ export default function TestExecutionPage() {
                 alert("Please enter the zero indications before loading and after unloading for the Zero Return Test.");
                 return false;
             }
+            if (!readingProofs["creep_test"]) {
+                alert("Please upload photo proof for Creep Test before proceeding.");
+                return false;
+            }
+            if (!readingProofs["zero_return_test"]) {
+                alert("Please upload photo proof for Zero Return Test before proceeding.");
+                return false;
+            }
         } else if (testId === 10) {
             for (let i = 0; i < step10Reading.trials.length; i++) {
                 const tr = step10Reading.trials[i];
                 if (!tr.functionTested || !tr.disturbed || !tr.executedBeforeStability) {
                     alert(`Please complete all required fields for Trial ${i + 1} of Stability of Equilibrium test before proceeding.`);
+                    return false;
+                }
+                if (!readingProofs[`stability_trial_${i + 1}`]) {
+                    alert(`Please upload photo proof for Trial ${i + 1} of Stability of Equilibrium test before proceeding.`);
                     return false;
                 }
             }
@@ -567,6 +613,10 @@ export default function TestExecutionPage() {
                     alert(`Please enter both Zero Error and Loaded Indication for ${key}.`);
                     return false;
                 }
+            }
+            if (!readingProofs["warmup_test"]) {
+                alert("Please upload photo proof for Warm-Up Time test before proceeding.");
+                return false;
             }
         }
         return true;
