@@ -3,31 +3,49 @@
 @tailwind utilities;
 
 :root {
-    /* Warm-Beige Soft UI (Neumorphic) Palette */
-    --bg-base: #F4F0E8;           /* Base warm sand/beige */
-    --bg-recessed: #EAE4D6;       /* Recessed areas, inputs, data wells */
-    --border-divider: #DED7C8;    /* Architectural dividers & structural borders */
-    --charcoal-solid: #1C1A17;    /* Solid warm charcoal for primary text & buttons */
-    --charcoal-hover: #2B2824;    /* Charcoal button hover */
-    --charcoal-muted: #5C5852;    /* Secondary/explanatory labels */
-    --charcoal-light: #7A7469;    /* Regulatory captions & meta */
-    
-    /* Neumorphic Lighting & Shadows */
-    --shadow-highlight: #FFFFFF;  /* Soft top-left highlight */
-    --shadow-ambient: #DBD3C3;    /* Soft bottom-right ambient shadow */
-    
+    /* Cool-Toned Architectural Soft UI Palette */
+    --bg-base: #F8FAFC;
+    /* Base light cool slate/white */
+    --bg-recessed: #EDF2F7;
+    /* Recessed areas, inputs, data wells */
+    --border-divider: #E2E8F0;
+    /* Crisp cool architectural borders */
+    --charcoal-solid: #0F172A;
+    /* Slate-900 for high-contrast primary text */
+    --charcoal-hover: #1E293B;
+    /* Slate-800 button hover */
+    --charcoal-muted: #64748B;
+    /* Secondary/explanatory labels (Slate-500) */
+    --charcoal-light: #94A3B8;
+    /* Regulatory captions & meta (Slate-400) */
+
+    /* Dedicated Blue Accent Tokens */
+    --brand-blue: #2563EB;
+    /* Primary accent blue */
+    --brand-blue-hover: #1D4ED8;
+    /* Blue hover state */
+    --brand-blue-glow: rgba(37, 99, 235, 0.28);
+    --brand-blue-subtle: #EFF6FF;
+    /* Very faint blue tint for selected states/badges */
+
+    /* Neumorphic Lighting & Shadows (Cool Tinted) */
+    --shadow-highlight: #FFFFFF;
+    /* Crisp top-left highlight */
+    --shadow-ambient: #DCE3EC;
+    /* Soft cool bottom-right shadow */
+
     /* Regulatory Status Solid Tones (Flat, strictly no gradients) */
-    --status-pass-bg: #E2EBDC;
-    --status-pass-text: #2D5A27;
-    --status-pass-border: #C5DAC0;
-    
-    --status-fail-bg: #F5DDDC;
-    --status-fail-text: #8B2522;
-    --status-fail-border: #EBC3C2;
-    
-    --status-pending-bg: #F5ECCF;
-    --status-pending-text: #8C5815;
-    --status-pending-border: #EBDCAC;
+    --status-pass-bg: #DCFCE7;
+    --status-pass-text: #166534;
+    --status-pass-border: #BBF7D0;
+
+    --status-fail-bg: #FEE2E2;
+    --status-fail-text: #991B1B;
+    --status-fail-border: #FECACA;
+
+    --status-pending-bg: #FEF3C7;
+    --status-pending-text: #92400E;
+    --status-pending-border: #FDE68A;
 
     /* Geometry Tokens: strictly moderate rounded corners (~12px to 14px), no pill/sharp */
     --radius-standard: 13px;
@@ -35,19 +53,19 @@
     --radius-lg: 14px;
 
     /* Legacy CSS Variable Mappings for deep backwards compatibility */
-    --brand: #1C1A17;
-    --brand-dark: #141210;
-    --brand-light: #EAE4D6;
-    --color-paper: #F4F0E8;
-    --color-card: #F4F0E8;
-    --color-line: #DED7C8;
-    --color-ink: #1C1A17;
-    --color-body: #1C1A17;
-    --color-muted: #5C5852;
-    --color-abyss: #F4F0E8;
-    --color-pass: #2D5A27;
-    --color-fail: #8B2522;
-    
+    --brand: #2563EB;
+    --brand-dark: #1D4ED8;
+    --brand-light: #EFF6FF;
+    --color-paper: #F8FAFC;
+    --color-card: #FFFFFF;
+    --color-line: #E2E8F0;
+    --color-ink: #0F172A;
+    --color-body: #0F172A;
+    --color-muted: #64748B;
+    --color-abyss: #F8FAFC;
+    --color-pass: #166534;
+    --color-fail: #991B1B;
+
     --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
     --font-body: 'Plus Jakarta Sans', sans-serif;
     --font-data: 'IBM Plex Mono', monospace;
@@ -80,7 +98,7 @@ body::before {
     height: 100vh;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.045;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -88,7 +106,9 @@ body::before {
    REGULATORY & DIRECT TYPOGRAPHY SYSTEM
    ========================================================================== */
 
-h1, .h1, .page-title {
+h1,
+.h1,
+.page-title {
     font-family: var(--font-display) !important;
     font-size: 1.55rem !important;
     font-weight: 700 !important;
@@ -98,7 +118,9 @@ h1, .h1, .page-title {
     text-transform: uppercase;
 }
 
-h2, .h2, .section-title {
+h2,
+.h2,
+.section-title {
     font-family: var(--font-display) !important;
     font-size: 1.25rem !important;
     font-weight: 700 !important;
@@ -108,7 +130,9 @@ h2, .h2, .section-title {
     text-transform: uppercase;
 }
 
-h3, .h3, .card-title {
+h3,
+.h3,
+.card-title {
     font-family: var(--font-display) !important;
     font-size: 1.05rem !important;
     font-weight: 700 !important;
@@ -117,7 +141,8 @@ h3, .h3, .card-title {
     letter-spacing: 0.01em;
 }
 
-h4, .h4 {
+h4,
+.h4 {
     font-family: var(--font-display) !important;
     font-size: 0.95rem !important;
     font-weight: 700 !important;
@@ -125,7 +150,10 @@ h4, .h4 {
     color: var(--charcoal-solid) !important;
 }
 
-h5, .h5, h6, .h6 {
+h5,
+.h5,
+h6,
+.h6 {
     font-family: var(--font-display) !important;
     font-size: 0.85rem !important;
     font-weight: 700 !important;
@@ -143,35 +171,41 @@ p {
    ========================================================================== */
 
 /* Convex Surfaces (Tactile-Raised): Cards, Panels, Modals, Containers */
-.tactile-raised, .form-card, .panel, .table-card, .content-box {
-    background-color: var(--bg-base);
+.tactile-raised,
+.form-card,
+.panel,
+.table-card,
+.content-box {
+    background-color: #FFFFFF;
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
-    box-shadow: 4px 4px 10px var(--shadow-ambient), -4px -4px 10px var(--shadow-highlight);
+    box-shadow: 4px 4px 12px var(--shadow-ambient), -3px -3px 10px var(--shadow-highlight);
     padding: 24px;
     margin-bottom: 24px;
 }
 
 .tactile-raised-sm {
-    background-color: var(--bg-base);
+    background-color: #FFFFFF;
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
     box-shadow: 2px 2px 6px var(--shadow-ambient), -2px -2px 6px var(--shadow-highlight);
 }
 
 .tactile-raised-lg {
-    background-color: var(--bg-base);
+    background-color: #FFFFFF;
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
-    box-shadow: 6px 6px 16px var(--shadow-ambient), -6px -6px 16px var(--shadow-highlight);
+    box-shadow: 6px 6px 18px var(--shadow-ambient), -5px -5px 16px var(--shadow-highlight);
 }
 
 /* Concave Surfaces (Tactile-Inset): Inputs, Search Bars, Tracks, Data Wells */
-.tactile-inset, .data-well, .well {
+.tactile-inset,
+.data-well,
+.well {
     background-color: var(--bg-recessed);
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
-    box-shadow: inset 2px 2px 5px var(--shadow-ambient), inset -2px -2px 5px var(--shadow-highlight);
+    box-shadow: inset 2px 2px 4px var(--shadow-ambient), inset -1px -1px 3px var(--shadow-highlight);
     color: var(--charcoal-solid);
 }
 
@@ -190,7 +224,15 @@ p {
     letter-spacing: 0.5px;
 }
 
-.form-input, .form-input-group input, select, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="search"] {
+.form-input,
+.form-input-group input,
+select,
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"] {
     width: 100%;
     padding: 10px 14px;
     background-color: var(--bg-recessed);
@@ -199,26 +241,31 @@ p {
     font-family: var(--font-body);
     font-size: 0.88rem;
     color: var(--charcoal-solid);
-    box-shadow: inset 2px 2px 5px var(--shadow-ambient), inset -2px -2px 5px var(--shadow-highlight);
+    box-shadow: inset 2px 2px 4px var(--shadow-ambient), inset -1px -1px 3px var(--shadow-highlight);
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
 }
 
-.form-input:focus, select:focus, textarea:focus, input:focus {
-    border-color: var(--charcoal-solid);
-    box-shadow: inset 2px 2px 5px var(--shadow-ambient), inset -2px -2px 5px var(--shadow-highlight), 0 0 0 1px var(--charcoal-solid);
+.form-input:focus,
+select:focus,
+textarea:focus,
+input:focus {
+    border-color: var(--brand-blue);
+    box-shadow: inset 2px 2px 4px var(--shadow-ambient), 0 0 0 1px var(--brand-blue);
 }
 
 /* ==========================================================================
-   BUTTONS: Solid Warm Charcoal & Neumorphic Tactile Relief
+   BUTTONS: Solid Blue & Cool Soft Relief
    ========================================================================== */
 
-/* Primary Button: Solid Charcoal #1C1A17, Convex Elevation */
-.btn, .btn-primary, .btn-submit {
-    background-color: var(--charcoal-solid);
-    color: var(--bg-base);
+/* Primary Button: Solid Precision Blue #2563EB, High-End Metrological Contrast */
+.btn,
+.btn-primary,
+.btn-submit {
+    background-color: var(--brand-blue);
+    color: #FFFFFF;
     padding: 10px 20px;
-    border: 1px solid var(--charcoal-solid);
+    border: 1px solid #1D4ED8;
     border-radius: var(--radius-standard);
     cursor: pointer;
     font-family: var(--font-body);
@@ -229,25 +276,30 @@ p {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 3px 3px 8px var(--shadow-ambient), -3px -3px 8px var(--shadow-highlight);
+    box-shadow: 0 4px 12px var(--brand-blue-glow), 2px 2px 5px var(--shadow-ambient);
     transition: all 0.15s ease-in-out;
 }
 
-.btn:hover, .btn-primary:hover, .btn-submit:hover {
-    background-color: var(--charcoal-hover);
+.btn:hover,
+.btn-primary:hover,
+.btn-submit:hover {
+    background-color: var(--brand-blue-hover);
     transform: translateY(1px);
-    box-shadow: 2px 2px 5px var(--shadow-ambient), -2px -2px 5px var(--shadow-highlight);
-    color: var(--bg-base);
+    box-shadow: 0 2px 6px var(--brand-blue-glow);
+    color: #FFFFFF;
 }
 
-.btn:active, .btn-primary:active, .btn-submit:active {
-    box-shadow: inset 2px 2px 4px #000000, inset -1px -1px 3px #333333;
+.btn:active,
+.btn-primary:active,
+.btn-submit:active {
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.35);
     transform: translateY(2px);
 }
 
-/* Secondary Button: Warm Beige Soft Surface */
-.btn-secondary, .btn-outline {
-    background-color: var(--bg-base);
+/* Secondary Button: Clean Cool Architectural Surface */
+.btn-secondary,
+.btn-outline {
+    background-color: #FFFFFF;
     color: var(--charcoal-solid);
     padding: 10px 18px;
     border: 1px solid var(--border-divider);
@@ -261,19 +313,44 @@ p {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 3px 3px 8px var(--shadow-ambient), -3px -3px 8px var(--shadow-highlight);
+    box-shadow: 2px 2px 6px var(--shadow-ambient), -2px -2px 6px var(--shadow-highlight);
     transition: all 0.15s ease-in-out;
 }
 
-.btn-secondary:hover, .btn-outline:hover {
+.btn-secondary:hover,
+.btn-outline:hover {
     background-color: var(--bg-recessed);
     color: var(--charcoal-solid);
+    border-color: #CBD5E1;
     transform: translateY(1px);
-    box-shadow: 2px 2px 5px var(--shadow-ambient), -2px -2px 5px var(--shadow-highlight);
+    box-shadow: 1px 1px 4px var(--shadow-ambient);
 }
 
-.btn-secondary:active, .btn-outline:active {
-    box-shadow: inset 2px 2px 4px var(--shadow-ambient), inset -2px -2px 4px var(--shadow-highlight);
+.btn-secondary:active,
+.btn-outline:active {
+    box-shadow: inset 2px 2px 4px var(--shadow-ambient);
+}
+
+/* Subtle Blue Outline Button (Great for 'Inspector Login' or Header Actions) */
+.btn-brand-outline {
+    background-color: #FFFFFF;
+    color: var(--brand-blue);
+    border: 1px solid #BFDBFE;
+    padding: 9px 17px;
+    border-radius: var(--radius-standard);
+    font-weight: 700;
+    font-size: 0.86rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: all 0.15s ease-in-out;
+}
+
+.btn-brand-outline:hover {
+    background-color: var(--brand-blue-subtle);
+    border-color: var(--brand-blue);
+    color: var(--brand-blue-hover);
 }
 
 /* Danger & Alert Buttons */
@@ -282,14 +359,14 @@ p {
     color: var(--status-fail-text);
     border: 1px solid var(--status-fail-border);
     border-radius: var(--radius-standard);
-    box-shadow: 3px 3px 8px var(--shadow-ambient), -3px -3px 8px var(--shadow-highlight);
+    box-shadow: 2px 2px 6px var(--shadow-ambient);
     padding: 10px 18px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .btn-danger:hover {
-    background-color: #f0cecd;
+    background-color: #FCA5A5;
     transform: translateY(1px);
 }
 
@@ -299,14 +376,14 @@ p {
     color: var(--status-pass-text);
     border: 1px solid var(--status-pass-border);
     border-radius: var(--radius-standard);
-    box-shadow: 3px 3px 8px var(--shadow-ambient), -3px -3px 8px var(--shadow-highlight);
+    box-shadow: 2px 2px 6px var(--shadow-ambient);
     padding: 10px 18px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .btn-success:hover {
-    background-color: #d6e3cf;
+    background-color: #86EFAC;
     transform: translateY(1px);
 }
 
@@ -324,19 +401,22 @@ p {
     text-transform: uppercase;
 }
 
-.status-pass, .pass-text {
+.status-pass,
+.pass-text {
     background-color: var(--status-pass-bg);
     color: var(--status-pass-text);
     border: 1px solid var(--status-pass-border);
 }
 
-.status-fail, .fail-text {
+.status-fail,
+.fail-text {
     background-color: var(--status-fail-bg);
     color: var(--status-fail-text);
     border: 1px solid var(--status-fail-border);
 }
 
-.status-pending, .pending-text {
+.status-pending,
+.pending-text {
     background-color: var(--status-pending-bg);
     color: var(--status-pending-text);
     border: 1px solid var(--status-pending-border);
@@ -361,7 +441,7 @@ table {
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
     overflow: hidden;
-    background-color: var(--bg-base);
+    background-color: #FFFFFF;
 }
 
 th {
@@ -389,7 +469,7 @@ tr:last-child td {
 }
 
 tbody tr:hover {
-    background-color: #EFEBE2;
+    background-color: #F1F5F9;
 }
 
 /* ==========================================================================
@@ -420,7 +500,7 @@ tbody tr:hover {
 /* Sidebar Tactile Styling */
 .app-sidebar {
     width: 260px;
-    background-color: var(--bg-base);
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -437,10 +517,10 @@ tbody tr:hover {
     position: fixed;
     bottom: 32px;
     right: 32px;
-    background-color: var(--bg-base);
+    background-color: #FFFFFF;
     border: 1px solid var(--border-divider);
-    border-left: 4px solid var(--charcoal-solid);
-    box-shadow: 6px 6px 18px var(--shadow-ambient), -6px -6px 18px var(--shadow-highlight);
+    border-left: 4px solid var(--brand-blue);
+    box-shadow: 6px 6px 18px var(--shadow-ambient), -4px -4px 14px var(--shadow-highlight);
     padding: 16px 22px;
     border-radius: var(--radius-standard);
     display: flex;
@@ -452,10 +532,17 @@ tbody tr:hover {
     font-size: 0.88rem;
 }
 
-/* Skeleton Loader: Warm Sand Subtle Pulse */
+/* Skeleton Loader: Cool Subtle Pulse */
 @keyframes skeleton-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.55; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.45;
+    }
 }
 
 .skeleton-pulse {
@@ -465,10 +552,10 @@ tbody tr:hover {
 }
 
 .skeleton-card {
-    background-color: var(--bg-base);
+    background-color: #FFFFFF;
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
-    box-shadow: 3px 3px 8px var(--shadow-ambient), -3px -3px 8px var(--shadow-highlight);
+    box-shadow: 3px 3px 8px var(--shadow-ambient), -2px -2px 6px var(--shadow-highlight);
     padding: 24px;
     margin-bottom: 20px;
 }
