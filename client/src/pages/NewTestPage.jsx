@@ -89,6 +89,38 @@ export default function NewTestPage() {
         });
     };
 
+    // Compress image files via canvas so they fit in localStorage regardless of original size
+    const compressImageForStorage = (file, maxDim = 800, quality = 0.6) => {
+        if (!file) return Promise.resolve("");
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // If it's not an image, return the raw base64 (PDFs etc.)
+                if (!file.type.startsWith("image/")) {
+                    resolve(reader.result);
+                    return;
+                }
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    let w = img.width, h = img.height;
+                    if (w > maxDim || h > maxDim) {
+                        if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+                        else { w = Math.round(w * maxDim / h); h = maxDim; }
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+                    resolve(canvas.toDataURL("image/jpeg", quality));
+                };
+                img.onerror = () => resolve(reader.result); // fallback to original
+                img.src = reader.result;
+            };
+            reader.onerror = () => resolve("");
+            reader.readAsDataURL(file);
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -120,20 +152,20 @@ export default function NewTestPage() {
 
         const minG = Number(min_capacity) * (formData.min_unit === "kg" ? 1000 : 1);
 
-        const photoFrontBase64 = await readFileAsBase64(files.photo_front);
-        const photoNameplateBase64 = await readFileAsBase64(files.photo_nameplate);
-        const photoRearSideBase64 = await readFileAsBase64(files.photo_rear_side);
-        const docTechSpecBase64 = await readFileAsBase64(files.doc_tech_spec);
-        const docManualBase64 = await readFileAsBase64(files.doc_operating_manual);
-        const docDrawingBase64 = await readFileAsBase64(files.doc_drawing);
+        // Compress images for localStorage (originals stay in `files` state)
+        const [photoFrontBase64, photoNameplateBase64, photoRearSideBase64] = await Promise.all([
+            compressImageForStorage(files.photo_front),
+            compressImageForStorage(files.photo_nameplate),
+            compressImageForStorage(files.photo_rear_side)
+        ]);
 
         const adminEvidence = {
             photo_front: { name: files.photo_front?.name || "", data: photoFrontBase64 },
             photo_nameplate: { name: files.photo_nameplate?.name || "", data: photoNameplateBase64 },
             photo_rear_side: { name: files.photo_rear_side?.name || "", data: photoRearSideBase64 },
-            doc_tech_spec: { name: files.doc_tech_spec?.name || "", data: docTechSpecBase64 },
-            doc_operating_manual: { name: files.doc_operating_manual?.name || "", data: docManualBase64 },
-            doc_drawing: { name: files.doc_drawing?.name || "", data: docDrawingBase64 }
+            doc_tech_spec: { name: files.doc_tech_spec?.name || "", data: "" },
+            doc_operating_manual: { name: files.doc_operating_manual?.name || "", data: "" },
+            doc_drawing: { name: files.doc_drawing?.name || "", data: "" }
         };
 
         const labDetails = {
@@ -184,11 +216,7 @@ export default function NewTestPage() {
             ].forEach(k => localStorage.removeItem(k));
         } catch (err) {
             console.error("Failed to save session data:", err);
-            if (err.name === "QuotaExceededError" || err.code === 22) {
-                alert("Storage quota exceeded. The uploaded files may be too large. Please try smaller images (under 1 MB each) or clear your browser data and retry.");
-            } else {
-                alert("An unexpected error occurred while saving session data. Please try again.");
-            }
+            alert("An unexpected error occurred while saving session data. Please try again.");
             return;
         }
 
