@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: nawi-platform
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: NODE_ENV=production node server/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true

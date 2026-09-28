@@ -1,0 +1,23 @@
+{
+  "name": "nawi-backend",
+  "version": "1.0.0",
+  "description": "NAWI Test Report Generator API Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Server build complete'",
+    "dev": "node --watch server.js",
+    "seed": "node seed_rules.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.7.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.3.1"
+  }
+}

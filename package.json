@@ -1,0 +1,15 @@
+{
+  "name": "nawi-mern-stack",
+  "version": "2.0.0",
+  "description": "NAWI Non-Automatic Weighing Instrument Testing & Certification Platform (MERN Stack)",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "npm run build --prefix client && node server/server.js",
+    "build": "npm run build --prefix client",
+    "postinstall": "npm install --prefix server && npm install --prefix client",
+    "seed": "npm run seed --prefix server"
+  },
+  "dependencies": {}
+}
