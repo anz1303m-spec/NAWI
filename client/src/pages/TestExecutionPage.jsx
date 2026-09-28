@@ -19,6 +19,9 @@ export default function TestExecutionPage() {
     const maxKg = Number(localStorage.getItem("Capacity")) || 1000;
     const eG = Number(localStorage.getItem("eValue")) || 10;
     const cls = localStorage.getItem("ClassValue") || "class III";
+    const minG = Number(localStorage.getItem("minCapacity")) || (20 * eG);
+    const maxG = maxKg * 1000;
+    const dG = eG; // For digital instruments, d = e (OIML R-76-1 §3.1.2)
 
     // Test form states
     const [form0, setForm0] = useState({
@@ -33,6 +36,11 @@ export default function TestExecutionPage() {
     const [zeroReading, setZeroReading] = useState({ indication: '' });
     const [tareReading, setTareReading] = useState({ tare_load: '', net_indication: '' });
     const [tiltReading, setTiltReading] = useState({ ref: '', tilt_x: '', tilt_y: '' });
+    const [discriminationReadings, setDiscriminationReadings] = useState({
+        min:     { initial: '', final: '' },
+        halfMax: { initial: '', final: '' },
+        max:     { initial: '', final: '' }
+    });
 
     // Reading Photo Proofs Map & Evidence Register
     const [readingProofs, setReadingProofs] = useState({});
@@ -208,6 +216,49 @@ export default function TestExecutionPage() {
         };
     };
 
+    // Discrimination test helper: format value with auto-unit
+    const formatLoadValue = (grams) => {
+        if (grams >= 1000) return `${(grams / 1000).toFixed(3)} kg`;
+        return `${grams} g`;
+    };
+
+    // Discrimination test points
+    const discrimPoints = [
+        { key: 'min',     label: 'Min',      loadG: minG },
+        { key: 'halfMax', label: '50% Max',   loadG: maxG / 2 },
+        { key: 'max',     label: 'Max',       loadG: maxG }
+    ];
+
+    const calculateDiscriminationResults = () => {
+        const rows = {};
+        let allPass = true;
+        for (const pt of discrimPoints) {
+            const reading = discriminationReadings[pt.key];
+            const initialKg = Number(reading.initial);
+            const finalKg = Number(reading.final);
+            const hasValues = reading.initial !== '' && reading.final !== '';
+
+            // Normalize to grams for comparison
+            const observedChangeG = hasValues ? Math.round((finalKg - initialKg) * 1000 * 1e6) / 1e6 : 0;
+            const passed = hasValues && Math.abs(observedChangeG - dG) < 0.001;
+            if (!passed) allPass = false;
+
+            rows[pt.key] = {
+                label: pt.label,
+                loadG: pt.loadG,
+                initialKg,
+                finalKg,
+                observedChangeG,
+                expectedChangeG: dG,
+                status: hasValues ? (passed ? 'PASS' : 'FAIL') : 'PENDING'
+            };
+        }
+        return {
+            rows,
+            status: allPass ? 'PASS' : 'FAIL'
+        };
+    };
+
     const validateCurrentTestStep = () => {
         const testId = currentTest.id;
         if (testId === 2) {
@@ -242,6 +293,18 @@ export default function TestExecutionPage() {
                 alert("Please fill in Tare Load Applied and Net Indication After Tare before proceeding.");
                 return false;
             }
+        } else if (testId === 7) {
+            for (const pt of discrimPoints) {
+                const reading = discriminationReadings[pt.key];
+                if (reading.initial === '' || reading.initial === undefined) {
+                    alert(`Enter the initial indication for the ${pt.label} test point.`);
+                    return false;
+                }
+                if (reading.final === '' || reading.final === undefined) {
+                    alert(`Enter the indication after adding 1.4d for the ${pt.label} test point.`);
+                    return false;
+                }
+            }
         } else if (testId === 8) {
             if (!tiltReading.ref || !tiltReading.tilt_x || !tiltReading.tilt_y) {
                 alert("Please fill in all Tilt Test observation readings (Level Reference, X-Axis, Y-Axis) before proceeding.");
@@ -270,6 +333,7 @@ export default function TestExecutionPage() {
             const fZeroRes = calculateZeroResults();
             const fTareRes = calculateTareResults();
             const fTiltRes = calculateTiltResults();
+            const fDiscrimRes = calculateDiscriminationResults();
 
             const body = {
                 instrument: instData,
@@ -288,6 +352,8 @@ export default function TestExecutionPage() {
                 form_tare_results: fTareRes,
                 form_tilt: tiltReading,
                 form_tilt_results: fTiltRes,
+                form_discrimination: discriminationReadings,
+                form_discrimination_results: fDiscrimRes,
                 reading_proofs: readingProofs,
                 lab_details: labDetails,
                 instrument_photo: photo,
@@ -607,6 +673,176 @@ export default function TestExecutionPage() {
                                 />
                             </div>
                         )}
+
+                        {/* TEST 7: Discrimination / Sensitivity */}
+                        {currentTest.id === 7 && (() => {
+                            const discrimResults = calculateDiscriminationResults();
+                            const extraLoadG = 1.4 * dG;
+                            return (
+                                <div>
+                                    {/* Instructions Section */}
+                                    <div className="p-4 bg-[#EAE4D6] rounded-[13px] border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3] mb-5">
+                                        <h4 className="text-xs font-bold text-[#1C1A17] uppercase tracking-wider mb-2 flex items-center gap-2">
+                                            <i className="fas fa-info-circle text-[#5C5852]"></i> Discrimination Test Instructions
+                                        </h4>
+                                        <div className="text-xs text-[#5C5852] leading-relaxed space-y-2">
+                                            <p className="m-0">The discrimination test checks whether the weighing instrument responds correctly to a small change in load.</p>
+                                            <p className="m-0">The test is performed at three load points: <strong>Min</strong>, <strong>50% Max</strong>, and <strong>Max</strong>.</p>
+                                            <p className="m-0">At each test point:</p>
+                                            <ol className="ml-4 space-y-0.5 list-decimal">
+                                                <li>Place the specified test load on the weighing instrument and allow the indication to stabilize.</li>
+                                                <li>Establish the initial indication (I) according to the prescribed test procedure.</li>
+                                                <li>Add an additional load of <strong>1.4 × d = {formatLoadValue(extraLoadG)}</strong>.</li>
+                                                <li>Record the new indication.</li>
+                                                <li>The indication must increase by exactly one actual scale interval (d).</li>
+                                            </ol>
+                                            <p className="m-0"><strong>Pass condition:</strong> Final Indication − Initial Indication = d</p>
+                                            <p className="m-0 text-[11px] italic text-[#7A7469] mt-2">
+                                                <i className="fas fa-lock mr-1"></i>
+                                                Min, Max, and d values are taken automatically from the instrument details entered earlier.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Test Parameters */}
+                                    <div className="mb-5">
+                                        <h4 className="text-xs font-bold text-[#1C1A17] uppercase tracking-wider mb-3">
+                                            <i className="fas fa-cogs mr-1.5 text-[#5C5852]"></i> Auto-Calculated Test Parameters
+                                        </h4>
+                                        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                                            {[
+                                                { label: 'Min', value: formatLoadValue(minG) },
+                                                { label: 'Max', value: formatLoadValue(maxG) },
+                                                { label: 'd (scale interval)', value: formatLoadValue(dG) },
+                                                { label: '50% Max', value: formatLoadValue(maxG / 2) },
+                                                { label: '1.4d (extra load)', value: formatLoadValue(extraLoadG) }
+                                            ].map(p => (
+                                                <div key={p.label} className="p-3 bg-[#EAE4D6] rounded-[11px] border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3]">
+                                                    <div className="text-[10px] font-bold text-[#7A7469] uppercase tracking-wider mb-0.5">{p.label}</div>
+                                                    <div className="text-sm font-bold text-[#1C1A17] font-mono">{p.value}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Main Discrimination Test Table */}
+                                    <h4 className="text-xs font-bold text-[#1C1A17] uppercase tracking-wider mb-3">
+                                        Discrimination Observation Readings
+                                    </h4>
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full text-xs">
+                                            <thead>
+                                                <tr>
+                                                    <th>TEST POINT</th>
+                                                    <th>TEST LOAD</th>
+                                                    <th>INITIAL INDICATION (KG)</th>
+                                                    <th>AFTER +1.4d (KG)</th>
+                                                    <th>OBSERVED CHANGE</th>
+                                                    <th>EXPECTED</th>
+                                                    <th>RESULT</th>
+                                                    <th>READING PHOTO PROOF</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {discrimPoints.map(pt => {
+                                                    const row = discrimResults.rows[pt.key];
+                                                    const reading = discriminationReadings[pt.key];
+                                                    const hasValues = reading.initial !== '' && reading.final !== '';
+                                                    return (
+                                                        <tr key={pt.key}>
+                                                            <td><strong>{pt.label}</strong></td>
+                                                            <td className="font-mono text-[#5C5852]">{formatLoadValue(pt.loadG)}</td>
+                                                            <td>
+                                                                <input
+                                                                    type="number"
+                                                                    step="any"
+                                                                    placeholder="Observed initial reading"
+                                                                    className="form-input w-40"
+                                                                    value={reading.initial}
+                                                                    onChange={e => {
+                                                                        const val = e.target.value;
+                                                                        setDiscriminationReadings(prev => ({
+                                                                            ...prev,
+                                                                            [pt.key]: { ...prev[pt.key], initial: val }
+                                                                        }));
+                                                                    }}
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <input
+                                                                    type="number"
+                                                                    step="any"
+                                                                    placeholder="Reading after +1.4d"
+                                                                    className="form-input w-40"
+                                                                    value={reading.final}
+                                                                    onChange={e => {
+                                                                        const val = e.target.value;
+                                                                        setDiscriminationReadings(prev => ({
+                                                                            ...prev,
+                                                                            [pt.key]: { ...prev[pt.key], final: val }
+                                                                        }));
+                                                                    }}
+                                                                />
+                                                            </td>
+                                                            <td className="font-mono font-bold">
+                                                                {hasValues ? formatLoadValue(row.observedChangeG) : '—'}
+                                                            </td>
+                                                            <td className="font-mono text-[#5C5852]">
+                                                                d = {formatLoadValue(dG)}
+                                                            </td>
+                                                            <td>
+                                                                {hasValues ? (
+                                                                    <span className={`status-badge ${
+                                                                        row.status === 'PASS' ? 'status-pass' : 'status-fail'
+                                                                    }`}>
+                                                                        {row.status}
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="status-badge status-pending">PENDING</span>
+                                                                )}
+                                                            </td>
+                                                            <td>
+                                                                <ReadingPhotoUploader
+                                                                    readingKey={`discrimination_${pt.key}`}
+                                                                    label={`${pt.label.toUpperCase()} DISCRIMINATION PROOF`}
+                                                                    currentProof={readingProofs[`discrimination_${pt.key}`]}
+                                                                    onProofUploaded={handleProofUploaded}
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {/* Overall Discrimination Result */}
+                                    <div className={`mt-5 p-4 rounded-[13px] border flex items-center justify-between ${
+                                        discrimResults.status === 'PASS'
+                                            ? 'bg-[#DCFCE7] border-[#BBF7D0]'
+                                            : 'bg-[#FEE2E2] border-[#FECACA]'
+                                    }`}>
+                                        <div>
+                                            <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: discrimResults.status === 'PASS' ? '#166534' : '#991B1B' }}>
+                                                Overall Discrimination Test Result
+                                            </div>
+                                            <div className="text-[11px]" style={{ color: discrimResults.status === 'PASS' ? '#166534' : '#991B1B' }}>
+                                                {discrimPoints.map(pt => {
+                                                    const r = discrimResults.rows[pt.key];
+                                                    return `${pt.label}: ${r.status}`;
+                                                }).join('  •  ')}
+                                            </div>
+                                        </div>
+                                        <span className={`status-badge text-sm px-4 py-1.5 ${
+                                            discrimResults.status === 'PASS' ? 'status-pass' : 'status-fail'
+                                        }`}>
+                                            <i className={`fas ${discrimResults.status === 'PASS' ? 'fa-check-circle' : 'fa-times-circle'} mr-1.5`}></i>
+                                            {discrimResults.status}
+                                        </span>
+                                    </div>
+                                </div>
+                            );
+                        })()}
 
                         {/* TEST 8: Tilt Test */}
                         {currentTest.id === 8 && (
