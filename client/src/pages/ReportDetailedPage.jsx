@@ -35,7 +35,7 @@ export default function ReportDetailedPage() {
         </div>
     );
     if (!report) return (
-        <div className="min-h-screen bg-[#F4F0E8] flex items-center justify-center p-6 text-center text-[#8B2522] font-bold">
+        <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 text-center text-[#991B1B] font-bold">
             Report not found!
         </div>
     );

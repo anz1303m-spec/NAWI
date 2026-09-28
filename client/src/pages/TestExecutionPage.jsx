@@ -22,6 +22,7 @@ export default function TestExecutionPage() {
     const minG = Number(localStorage.getItem("minCapacity")) || (20 * eG);
     const maxG = maxKg * 1000;
     const dG = eG; // For digital instruments, d = e (OIML R-76-1 §3.1.2)
+    const unit = 'kg';
 
     // Test form states
     const [form0, setForm0] = useState({
@@ -1778,192 +1779,196 @@ export default function TestExecutionPage() {
                         })()}
 
                         {/* STEP 11: WARM-UP TIME */}
-                        {currentTest.id === 11 && (() => {
-                            const s11Res = calculateStep11Results();
-                            const timePoints = [
-                                { key: '0min', label: '0 min' },
-                                { key: '5min', label: '5 min' },
-                                { key: '15min', label: '15 min' },
-                                { key: '30min', label: '30 min' }
-                            ];
+                        {currentTest.id === 11 && (
+                            <div className="space-y-6">
+                                {(() => {
+                                    const s11Res = calculateStep11Results();
+                                    const timePoints = [
+                                        { key: '0min', label: '0 min' },
+                                        { key: '5min', label: '5 min' },
+                                        { key: '15min', label: '15 min' },
+                                        { key: '30min', label: '30 min' }
+                                    ];
 
-                            return (
-                                <div className="space-y-6">
-                                    {/* 1. PRE-TEST */}
-                                    <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] space-y-4">
-                                        <div className="text-xs font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
-                                            <i className="fas fa-power-off text-[#2563EB]"></i> Pre-Test Requirements
-                                        </div>
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                                            <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
-                                                <div className="text-[10px] font-bold text-[#64748B] uppercase">Required Power-Off Duration</div>
-                                                <div className="text-sm font-mono font-bold text-[#0F172A] mt-0.5">&ge; 8 hours</div>
-                                            </div>
-                                            <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
-                                                <label className="text-[10px] font-bold text-[#64748B] uppercase block mb-1">
-                                                    Actual Power-Off Duration (hours)
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    step="0.1"
-                                                    min="0"
-                                                    placeholder="e.g. 8.0"
-                                                    className="form-input text-xs font-mono font-bold"
-                                                    value={step11Reading.powerOffHours}
-                                                    onChange={e => setStep11Reading(prev => ({ ...prev, powerOffHours: e.target.value }))}
-                                                />
-                                            </div>
-                                            <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
-                                                <div className="text-[10px] font-bold text-[#64748B] uppercase">Test Load (Close to Max)</div>
-                                                <div className="text-sm font-mono font-bold text-[#2563EB] mt-0.5">{s11Res.testLoadKg} {unit}</div>
-                                            </div>
-                                        </div>
+                                    return (
+                                        <>
+                                            {/* 1. PRE-TEST */}
+                                            <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] space-y-4">
+                                                <div className="text-xs font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
+                                                    <i className="fas fa-power-off text-[#2563EB]"></i> Pre-Test Requirements
+                                                </div>
+                                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                                                    <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
+                                                        <div className="text-[10px] font-bold text-[#64748B] uppercase">Required Power-Off Duration</div>
+                                                        <div className="text-sm font-mono font-bold text-[#0F172A] mt-0.5">&ge; 8 hours</div>
+                                                    </div>
+                                                    <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
+                                                        <label className="text-[10px] font-bold text-[#64748B] uppercase block mb-1">
+                                                            Actual Power-Off Duration (hours)
+                                                        </label>
+                                                        <input
+                                                            type="number"
+                                                            step="0.1"
+                                                            min="0"
+                                                            placeholder="e.g. 8.0"
+                                                            className="form-input text-xs font-mono font-bold"
+                                                            value={step11Reading.powerOffHours}
+                                                            onChange={e => setStep11Reading(prev => ({ ...prev, powerOffHours: e.target.value }))}
+                                                        />
+                                                    </div>
+                                                    <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
+                                                        <div className="text-[10px] font-bold text-[#64748B] uppercase">Test Load (Close to Max)</div>
+                                                        <div className="text-sm font-mono font-bold text-[#2563EB] mt-0.5">{s11Res.testLoadKg} {unit}</div>
+                                                    </div>
+                                                </div>
 
-                                        {!s11Res.powerOffValid && step11Reading.powerOffHours !== '' && (
-                                            <div className="p-3 bg-[#FEE2E2] border border-[#FECACA] rounded-[9px] text-xs font-bold text-[#991B1B] flex items-center gap-2">
-                                                <i className="fas fa-exclamation-triangle"></i>
-                                                FAIL: Actual power-off duration is less than 8 hours. OIML A.5.2 requires &ge; 8 hours.
+                                                {!s11Res.powerOffValid && step11Reading.powerOffHours !== '' && (
+                                                    <div className="p-3 bg-[#FEE2E2] border border-[#FECACA] rounded-[9px] text-xs font-bold text-[#991B1B] flex items-center gap-2">
+                                                        <i className="fas fa-exclamation-triangle"></i>
+                                                        FAIL: Actual power-off duration is less than 8 hours. OIML A.5.2 requires &ge; 8 hours.
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
 
-                                    {/* 2. WARM-UP TEST TABLE */}
-                                    <div className="overflow-x-auto border border-[#E2E8F0] rounded-[13px] bg-white">
-                                        <table className="w-full text-xs text-left border-collapse">
-                                            <thead>
-                                                <tr className="bg-[#F8FAFC] border-b border-[#E2E8F0] text-[#64748B] font-bold uppercase text-[10px]">
-                                                    <th className="p-3">Time</th>
-                                                    <th className="p-3">Zero Error ({unit})</th>
-                                                    <th className="p-3">Loaded Indication ({unit})</th>
-                                                    <th className="p-3">Corrected Error ({unit})</th>
-                                                    <th className="p-3 text-center">Result</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="divide-y divide-[#E2E8F0]">
-                                                {timePoints.map(tp => {
-                                                    const row = s11Res.evaluatedRows[tp.key] || {};
-                                                    const rawInput = step11Reading.rows[tp.key] || { zeroError: '', loadedInd: '' };
-                                                    return (
-                                                        <tr key={tp.key} className="hover:bg-[#F8FAFC]">
-                                                            <td className="p-3 font-mono font-bold text-[#0F172A]">{tp.label}</td>
-                                                            <td className="p-3">
-                                                                <input
-                                                                    type="number"
-                                                                    step="any"
-                                                                    placeholder="e.g. 0.0"
-                                                                    className="form-input text-xs font-mono py-1.5"
-                                                                    value={rawInput.zeroError}
-                                                                    onChange={e => setStep11Reading(prev => ({
-                                                                        ...prev,
-                                                                        rows: {
-                                                                            ...prev.rows,
-                                                                            [tp.key]: { ...prev.rows[tp.key], zeroError: e.target.value }
-                                                                        }
-                                                                    }))}
-                                                                />
-                                                            </td>
-                                                            <td className="p-3">
-                                                                <input
-                                                                    type="number"
-                                                                    step="any"
-                                                                    placeholder={`e.g. ${s11Res.testLoadKg}`}
-                                                                    className="form-input text-xs font-mono py-1.5"
-                                                                    value={rawInput.loadedInd}
-                                                                    onChange={e => setStep11Reading(prev => ({
-                                                                        ...prev,
-                                                                        rows: {
-                                                                            ...prev.rows,
-                                                                            [tp.key]: { ...prev.rows[tp.key], loadedInd: e.target.value }
-                                                                        }
-                                                                    }))}
-                                                                />
-                                                            </td>
-                                                            <td className="p-3 font-mono font-bold">
-                                                                {row.correctedError !== null && row.correctedError !== undefined
-                                                                    ? `${row.correctedError > 0 ? '+' : ''}${row.correctedError.toFixed(4)}`
-                                                                    : '—'
-                                                                }
-                                                            </td>
-                                                            <td className="p-3 text-center font-mono font-bold">
-                                                                <span className={`px-2.5 py-1 rounded-[6px] text-[11px] ${
-                                                                    row.status === 'PASS' ? 'bg-[#DCFCE7] text-[#166534]' :
-                                                                    row.status === 'FAIL' ? 'bg-[#FEE2E2] text-[#991B1B]' :
-                                                                    'bg-[#F1F5F9] text-[#64748B]'
-                                                                }`}>
-                                                                    {row.status}
-                                                                </span>
-                                                            </td>
+                                            {/* 2. WARM-UP TEST TABLE */}
+                                            <div className="overflow-x-auto border border-[#E2E8F0] rounded-[13px] bg-white">
+                                                <table className="w-full text-xs text-left border-collapse">
+                                                    <thead>
+                                                        <tr className="bg-[#F8FAFC] border-b border-[#E2E8F0] text-[#64748B] font-bold uppercase text-[10px]">
+                                                            <th className="p-3">Time</th>
+                                                            <th className="p-3">Zero Error ({unit})</th>
+                                                            <th className="p-3">Loaded Indication ({unit})</th>
+                                                            <th className="p-3">Corrected Error ({unit})</th>
+                                                            <th className="p-3 text-center">Result</th>
                                                         </tr>
-                                                    );
-                                                })}
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    {/* OIML REQUIREMENT CHECK (CLAUSE 5.3.5) */}
-                                    <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] space-y-2">
-                                        <label className="text-xs font-bold text-[#0F172A] block">
-                                            Was a weighing result displayed or transmitted during warm-up? (OIML R 76-1 5.3.5)
-                                        </label>
-                                        <div className="flex gap-4">
-                                            <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="displayedDuringWarmup"
-                                                    value="NO"
-                                                    checked={step11Reading.displayedDuringWarmup === 'NO'}
-                                                    onChange={e => setStep11Reading(prev => ({ ...prev, displayedDuringWarmup: e.target.value }))}
-                                                />
-                                                No (PASS)
-                                            </label>
-                                            <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="displayedDuringWarmup"
-                                                    value="YES"
-                                                    checked={step11Reading.displayedDuringWarmup === 'YES'}
-                                                    onChange={e => setStep11Reading(prev => ({ ...prev, displayedDuringWarmup: e.target.value }))}
-                                                />
-                                                Yes (FAIL)
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    {/* PHOTO PROOF */}
-                                    <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px]">
-                                        <ReadingPhotoUploader
-                                            readingKey="warmup_test"
-                                            label="Capture / Select Warm-Up Test Proof Photo"
-                                            currentProof={readingProofs["warmup_test"]}
-                                            onProofUploaded={handleProofUploaded}
-                                        />
-                                    </div>
-
-                                    {/* OVERALL RESULT BANNER */}
-                                    <div className={`p-4 rounded-[13px] border flex flex-col sm:flex-row items-center justify-between gap-4 ${
-                                        s11Res.overallPassed ? 'bg-[#DCFCE7] border-[#BBF7D0]' : 'bg-[#FEE2E2] border-[#FECACA]'
-                                    }`}>
-                                        <div>
-                                            <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{
-                                                color: s11Res.overallPassed ? '#166534' : '#991B1B'
-                                            }}>
-                                                Overall Result: {s11Res.overallStatus}
+                                                    </thead>
+                                                    <tbody className="divide-y divide-[#E2E8F0]">
+                                                        {timePoints.map(tp => {
+                                                            const row = s11Res.evaluatedRows[tp.key] || {};
+                                                            const rawInput = step11Reading.rows[tp.key] || { zeroError: '', loadedInd: '' };
+                                                            return (
+                                                                <tr key={tp.key} className="hover:bg-[#F8FAFC]">
+                                                                    <td className="p-3 font-mono font-bold text-[#0F172A]">{tp.label}</td>
+                                                                    <td className="p-3">
+                                                                        <input
+                                                                            type="number"
+                                                                            step="any"
+                                                                            placeholder="e.g. 0.0"
+                                                                            className="form-input text-xs font-mono py-1.5"
+                                                                            value={rawInput.zeroError}
+                                                                            onChange={e => setStep11Reading(prev => ({
+                                                                                ...prev,
+                                                                                rows: {
+                                                                                    ...prev.rows,
+                                                                                    [tp.key]: { ...prev.rows[tp.key], zeroError: e.target.value }
+                                                                                }
+                                                                            }))}
+                                                                        />
+                                                                    </td>
+                                                                    <td className="p-3">
+                                                                        <input
+                                                                            type="number"
+                                                                            step="any"
+                                                                            placeholder={`e.g. ${s11Res.testLoadKg}`}
+                                                                            className="form-input text-xs font-mono py-1.5"
+                                                                            value={rawInput.loadedInd}
+                                                                            onChange={e => setStep11Reading(prev => ({
+                                                                                ...prev,
+                                                                                rows: {
+                                                                                    ...prev.rows,
+                                                                                    [tp.key]: { ...prev.rows[tp.key], loadedInd: e.target.value }
+                                                                                }
+                                                                            }))}
+                                                                        />
+                                                                    </td>
+                                                                    <td className="p-3 font-mono font-bold">
+                                                                        {row.correctedError !== null && row.correctedError !== undefined
+                                                                            ? `${row.correctedError > 0 ? '+' : ''}${row.correctedError.toFixed(4)}`
+                                                                            : '—'
+                                                                        }
+                                                                    </td>
+                                                                    <td className="p-3 text-center font-mono font-bold">
+                                                                        <span className={`px-2.5 py-1 rounded-[6px] text-[11px] ${
+                                                                            row.status === 'PASS' ? 'bg-[#DCFCE7] text-[#166534]' :
+                                                                            row.status === 'FAIL' ? 'bg-[#FEE2E2] text-[#991B1B]' :
+                                                                            'bg-[#F1F5F9] text-[#64748B]'
+                                                                        }`}>
+                                                                            {row.status}
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        })}
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            <div className="text-[11px] font-mono" style={{
-                                                color: s11Res.overallPassed ? '#166534' : '#991B1B'
-                                            }}>
-                                                MPE: &plusmn;{s11Res.mpeKg.toFixed(4)} {unit} (&plusmn;{s11Res.mpe_e}e)
+
+                                            {/* OIML REQUIREMENT CHECK (CLAUSE 5.3.5) */}
+                                            <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] space-y-2">
+                                                <label className="text-xs font-bold text-[#0F172A] block">
+                                                    Was a weighing result displayed or transmitted during warm-up? (OIML R 76-1 5.3.5)
+                                                </label>
+                                                <div className="flex gap-4">
+                                                    <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="displayedDuringWarmup"
+                                                            value="NO"
+                                                            checked={step11Reading.displayedDuringWarmup === 'NO'}
+                                                            onChange={e => setStep11Reading(prev => ({ ...prev, displayedDuringWarmup: e.target.value }))}
+                                                        />
+                                                        No (PASS)
+                                                    </label>
+                                                    <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] cursor-pointer">
+                                                        <input
+                                                            type="radio"
+                                                            name="displayedDuringWarmup"
+                                                            value="YES"
+                                                            checked={step11Reading.displayedDuringWarmup === 'YES'}
+                                                            onChange={e => setStep11Reading(prev => ({ ...prev, displayedDuringWarmup: e.target.value }))}
+                                                        />
+                                                        Yes (FAIL)
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <span className={`text-xs font-mono font-bold uppercase px-3 py-1.5 rounded-[8px] border ${
-                                            s11Res.overallPassed ? 'bg-white text-[#166534] border-[#BBF7D0]' : 'bg-white text-[#991B1B] border-[#FECACA]'
-                                        }`}>
-                                            {s11Res.overallPassed ? 'PASS' : 'FAIL'}
-                                        </span>
-                                    </div>
-                                </div>
-                            );
-                        })()}
+
+                                            {/* PHOTO PROOF */}
+                                            <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px]">
+                                                <ReadingPhotoUploader
+                                                    readingKey="warmup_test"
+                                                    label="Capture / Select Warm-Up Test Proof Photo"
+                                                    currentProof={readingProofs["warmup_test"]}
+                                                    onProofUploaded={handleProofUploaded}
+                                                />
+                                            </div>
+
+                                            {/* OVERALL RESULT BANNER */}
+                                            <div className={`p-4 rounded-[13px] border flex flex-col sm:flex-row items-center justify-between gap-4 ${
+                                                s11Res.overallPassed ? 'bg-[#DCFCE7] border-[#BBF7D0]' : 'bg-[#FEE2E2] border-[#FECACA]'
+                                            }`}>
+                                                <div>
+                                                    <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{
+                                                        color: s11Res.overallPassed ? '#166534' : '#991B1B'
+                                                    }}>
+                                                        Overall Result: {s11Res.overallStatus}
+                                                    </div>
+                                                    <div className="text-[11px] font-mono" style={{
+                                                        color: s11Res.overallPassed ? '#166534' : '#991B1B'
+                                                    }}>
+                                                        MPE: &plusmn;{s11Res.mpeKg.toFixed(4)} {unit} (&plusmn;{s11Res.mpe_e}e)
+                                                    </div>
+                                                </div>
+                                                <span className={`text-xs font-mono font-bold uppercase px-3 py-1.5 rounded-[8px] border ${
+                                                    s11Res.overallPassed ? 'bg-white text-[#166534] border-[#BBF7D0]' : 'bg-white text-[#991B1B] border-[#FECACA]'
+                                                }`}>
+                                                    {s11Res.overallPassed ? 'PASS' : 'FAIL'}
+                                                </span>
+                                            </div>
+                                        </>
+                                    );
+                                })()}
+                            </div>
+                        )}
                     </div>
 
                     {/* Step Navigation Buttons */}

@@ -155,7 +155,7 @@ export default function ReadingPhotoUploader({ readingKey, label, currentProof, 
     };
 
     return (
-        <div className="bg-[#EAE4D6] border border-dashed border-[#DED7C8] rounded-[13px] p-3.5 mt-2.5 shadow-[inset_1px_1px_3px_#DBD3C3]">
+        <div className="bg-[#F8FAFC] border border-dashed border-[#CBD5E1] rounded-[13px] p-3.5 mt-2.5 shadow-[inset_1px_1px_3px_#E2E8F0]">
             <input
                 type="file"
                 accept="image/*"
