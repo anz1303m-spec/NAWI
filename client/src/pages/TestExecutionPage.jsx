@@ -67,6 +67,19 @@ export default function TestExecutionPage() {
         ]
     });
 
+    // Step 11 State: Warm-Up Time
+    const [step11Reading, setStep11Reading] = useState({
+        powerOffHours: '',
+        testLoad: '',
+        displayedDuringWarmup: 'NO',
+        rows: {
+            '0min':  { zeroError: '', loadedInd: '' },
+            '5min':  { zeroError: '', loadedInd: '' },
+            '15min': { zeroError: '', loadedInd: '' },
+            '30min': { zeroError: '', loadedInd: '' }
+        }
+    });
+
     // Reading Photo Proofs Map & Evidence Register
     const [readingProofs, setReadingProofs] = useState({});
     const [evidenceList, setEvidenceList] = useState([]);
@@ -395,6 +408,71 @@ export default function TestExecutionPage() {
         };
     };
 
+    const calculateStep11Results = () => {
+        const powerOff = Number(step11Reading.powerOffHours);
+        const powerOffValid = !isNaN(powerOff) && powerOff >= 8;
+        const testLoadKg = step11Reading.testLoad !== '' ? Number(step11Reading.testLoad) : maxKg;
+        const testLoadG = testLoadKg * 1000;
+
+        const mpe_e = getMPE(testLoadG, eG, cls);
+        const mpeKg = (mpe_e * eG) / 1000;
+
+        const timePoints = [
+            { key: '0min', label: '0 min' },
+            { key: '5min', label: '5 min' },
+            { key: '15min', label: '15 min' },
+            { key: '30min', label: '30 min' }
+        ];
+
+        let allRowsPassed = true;
+        const evaluatedRows = {};
+
+        timePoints.forEach(tp => {
+            const rowData = step11Reading.rows[tp.key] || {};
+            const zErr = rowData.zeroError !== '' ? Number(rowData.zeroError) : NaN;
+            const lInd = rowData.loadedInd !== '' ? Number(rowData.loadedInd) : NaN;
+
+            if (!isNaN(zErr) && !isNaN(lInd)) {
+                const rawLoadedError = lInd - testLoadKg;
+                const correctedError = rawLoadedError - zErr;
+                const passed = Math.abs(correctedError) <= (mpeKg + 1e-9);
+                if (!passed) allRowsPassed = false;
+                evaluatedRows[tp.key] = {
+                    zeroError: zErr,
+                    loadedInd: lInd,
+                    rawLoadedError,
+                    correctedError,
+                    passed,
+                    status: passed ? 'PASS' : 'FAIL'
+                };
+            } else {
+                allRowsPassed = false;
+                evaluatedRows[tp.key] = {
+                    zeroError: zErr,
+                    loadedInd: lInd,
+                    correctedError: null,
+                    passed: false,
+                    status: 'PENDING'
+                };
+            }
+        });
+
+        const displayedFail = step11Reading.displayedDuringWarmup === 'YES';
+        const overallPassed = powerOffValid && !displayedFail && allRowsPassed;
+        const overallStatus = !powerOffValid ? 'FAIL (Power Off < 8h)' : displayedFail ? 'FAIL (Result Displayed)' : (allRowsPassed ? 'PASS' : 'FAIL');
+
+        return {
+            powerOffValid,
+            testLoadKg,
+            mpeKg,
+            mpe_e,
+            evaluatedRows,
+            displayedFail,
+            overallPassed,
+            overallStatus
+        };
+    };
+
     const validateCurrentTestStep = () => {
         const testId = currentTest.id;
         if (testId === 2) {
@@ -472,6 +550,23 @@ export default function TestExecutionPage() {
                     return false;
                 }
             }
+        } else if (testId === 11) {
+            const powerOff = Number(step11Reading.powerOffHours);
+            if (step11Reading.powerOffHours === '' || isNaN(powerOff)) {
+                alert("Please enter the actual power-off duration.");
+                return false;
+            }
+            if (powerOff < 8) {
+                alert("Actual power-off duration is less than 8 hours. OIML A.5.2 requires at least 8 hours power-off duration before warm-up test.");
+                return false;
+            }
+            for (const key of ['0min', '5min', '15min', '30min']) {
+                const row = step11Reading.rows[key];
+                if (row.zeroError === '' || row.loadedInd === '') {
+                    alert(`Please enter both Zero Error and Loaded Indication for ${key}.`);
+                    return false;
+                }
+            }
         }
         return true;
     };
@@ -498,6 +593,7 @@ export default function TestExecutionPage() {
             const fDiscrimRes = calculateDiscriminationResults();
             const f9Res = calculateStep9Results();
             const f10Res = calculateStep10Results();
+            const f11Res = calculateStep11Results();
 
             const body = {
                 instrument: instData,
@@ -522,6 +618,8 @@ export default function TestExecutionPage() {
                 form9_results: f9Res,
                 form10: step10Reading,
                 form10_results: f10Res,
+                form11: step11Reading,
+                form11_results: f11Res,
                 reading_proofs: readingProofs,
                 lab_details: labDetails,
                 instrument_photo: photo,
@@ -1673,6 +1771,194 @@ export default function TestExecutionPage() {
                                         </div>
                                         <span className="text-xs font-mono font-bold uppercase px-3 py-1.5 rounded-[8px] bg-white border border-current">
                                             {s10Res.overallStatus}
+                                        </span>
+                                    </div>
+                                </div>
+                            );
+                        })()}
+
+                        {/* STEP 11: WARM-UP TIME */}
+                        {currentTest.id === 11 && (() => {
+                            const s11Res = calculateStep11Results();
+                            const timePoints = [
+                                { key: '0min', label: '0 min' },
+                                { key: '5min', label: '5 min' },
+                                { key: '15min', label: '15 min' },
+                                { key: '30min', label: '30 min' }
+                            ];
+
+                            return (
+                                <div className="space-y-6">
+                                    {/* 1. PRE-TEST */}
+                                    <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] space-y-4">
+                                        <div className="text-xs font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
+                                            <i className="fas fa-power-off text-[#2563EB]"></i> Pre-Test Requirements
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                                            <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
+                                                <div className="text-[10px] font-bold text-[#64748B] uppercase">Required Power-Off Duration</div>
+                                                <div className="text-sm font-mono font-bold text-[#0F172A] mt-0.5">&ge; 8 hours</div>
+                                            </div>
+                                            <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
+                                                <label className="text-[10px] font-bold text-[#64748B] uppercase block mb-1">
+                                                    Actual Power-Off Duration (hours)
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    step="0.1"
+                                                    min="0"
+                                                    placeholder="e.g. 8.0"
+                                                    className="form-input text-xs font-mono font-bold"
+                                                    value={step11Reading.powerOffHours}
+                                                    onChange={e => setStep11Reading(prev => ({ ...prev, powerOffHours: e.target.value }))}
+                                                />
+                                            </div>
+                                            <div className="p-3 bg-white border border-[#E2E8F0] rounded-[9px]">
+                                                <div className="text-[10px] font-bold text-[#64748B] uppercase">Test Load (Close to Max)</div>
+                                                <div className="text-sm font-mono font-bold text-[#2563EB] mt-0.5">{s11Res.testLoadKg} {unit}</div>
+                                            </div>
+                                        </div>
+
+                                        {!s11Res.powerOffValid && step11Reading.powerOffHours !== '' && (
+                                            <div className="p-3 bg-[#FEE2E2] border border-[#FECACA] rounded-[9px] text-xs font-bold text-[#991B1B] flex items-center gap-2">
+                                                <i className="fas fa-exclamation-triangle"></i>
+                                                FAIL: Actual power-off duration is less than 8 hours. OIML A.5.2 requires &ge; 8 hours.
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* 2. WARM-UP TEST TABLE */}
+                                    <div className="overflow-x-auto border border-[#E2E8F0] rounded-[13px] bg-white">
+                                        <table className="w-full text-xs text-left border-collapse">
+                                            <thead>
+                                                <tr className="bg-[#F8FAFC] border-b border-[#E2E8F0] text-[#64748B] font-bold uppercase text-[10px]">
+                                                    <th className="p-3">Time</th>
+                                                    <th className="p-3">Zero Error ({unit})</th>
+                                                    <th className="p-3">Loaded Indication ({unit})</th>
+                                                    <th className="p-3">Corrected Error ({unit})</th>
+                                                    <th className="p-3 text-center">Result</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-[#E2E8F0]">
+                                                {timePoints.map(tp => {
+                                                    const row = s11Res.evaluatedRows[tp.key] || {};
+                                                    const rawInput = step11Reading.rows[tp.key] || { zeroError: '', loadedInd: '' };
+                                                    return (
+                                                        <tr key={tp.key} className="hover:bg-[#F8FAFC]">
+                                                            <td className="p-3 font-mono font-bold text-[#0F172A]">{tp.label}</td>
+                                                            <td className="p-3">
+                                                                <input
+                                                                    type="number"
+                                                                    step="any"
+                                                                    placeholder="e.g. 0.0"
+                                                                    className="form-input text-xs font-mono py-1.5"
+                                                                    value={rawInput.zeroError}
+                                                                    onChange={e => setStep11Reading(prev => ({
+                                                                        ...prev,
+                                                                        rows: {
+                                                                            ...prev.rows,
+                                                                            [tp.key]: { ...prev.rows[tp.key], zeroError: e.target.value }
+                                                                        }
+                                                                    }))}
+                                                                />
+                                                            </td>
+                                                            <td className="p-3">
+                                                                <input
+                                                                    type="number"
+                                                                    step="any"
+                                                                    placeholder={`e.g. ${s11Res.testLoadKg}`}
+                                                                    className="form-input text-xs font-mono py-1.5"
+                                                                    value={rawInput.loadedInd}
+                                                                    onChange={e => setStep11Reading(prev => ({
+                                                                        ...prev,
+                                                                        rows: {
+                                                                            ...prev.rows,
+                                                                            [tp.key]: { ...prev.rows[tp.key], loadedInd: e.target.value }
+                                                                        }
+                                                                    }))}
+                                                                />
+                                                            </td>
+                                                            <td className="p-3 font-mono font-bold">
+                                                                {row.correctedError !== null && row.correctedError !== undefined
+                                                                    ? `${row.correctedError > 0 ? '+' : ''}${row.correctedError.toFixed(4)}`
+                                                                    : '—'
+                                                                }
+                                                            </td>
+                                                            <td className="p-3 text-center font-mono font-bold">
+                                                                <span className={`px-2.5 py-1 rounded-[6px] text-[11px] ${
+                                                                    row.status === 'PASS' ? 'bg-[#DCFCE7] text-[#166534]' :
+                                                                    row.status === 'FAIL' ? 'bg-[#FEE2E2] text-[#991B1B]' :
+                                                                    'bg-[#F1F5F9] text-[#64748B]'
+                                                                }`}>
+                                                                    {row.status}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {/* OIML REQUIREMENT CHECK (CLAUSE 5.3.5) */}
+                                    <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] space-y-2">
+                                        <label className="text-xs font-bold text-[#0F172A] block">
+                                            Was a weighing result displayed or transmitted during warm-up? (OIML R 76-1 5.3.5)
+                                        </label>
+                                        <div className="flex gap-4">
+                                            <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] cursor-pointer">
+                                                <input
+                                                    type="radio"
+                                                    name="displayedDuringWarmup"
+                                                    value="NO"
+                                                    checked={step11Reading.displayedDuringWarmup === 'NO'}
+                                                    onChange={e => setStep11Reading(prev => ({ ...prev, displayedDuringWarmup: e.target.value }))}
+                                                />
+                                                No (PASS)
+                                            </label>
+                                            <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] cursor-pointer">
+                                                <input
+                                                    type="radio"
+                                                    name="displayedDuringWarmup"
+                                                    value="YES"
+                                                    checked={step11Reading.displayedDuringWarmup === 'YES'}
+                                                    onChange={e => setStep11Reading(prev => ({ ...prev, displayedDuringWarmup: e.target.value }))}
+                                                />
+                                                Yes (FAIL)
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    {/* PHOTO PROOF */}
+                                    <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px]">
+                                        <ReadingPhotoUploader
+                                            readingKey="warmup_test"
+                                            label="Capture / Select Warm-Up Test Proof Photo"
+                                            currentProof={readingProofs["warmup_test"]}
+                                            onProofUploaded={handleProofUploaded}
+                                        />
+                                    </div>
+
+                                    {/* OVERALL RESULT BANNER */}
+                                    <div className={`p-4 rounded-[13px] border flex flex-col sm:flex-row items-center justify-between gap-4 ${
+                                        s11Res.overallPassed ? 'bg-[#DCFCE7] border-[#BBF7D0]' : 'bg-[#FEE2E2] border-[#FECACA]'
+                                    }`}>
+                                        <div>
+                                            <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{
+                                                color: s11Res.overallPassed ? '#166534' : '#991B1B'
+                                            }}>
+                                                Overall Result: {s11Res.overallStatus}
+                                            </div>
+                                            <div className="text-[11px] font-mono" style={{
+                                                color: s11Res.overallPassed ? '#166534' : '#991B1B'
+                                            }}>
+                                                MPE: &plusmn;{s11Res.mpeKg.toFixed(4)} {unit} (&plusmn;{s11Res.mpe_e}e)
+                                            </div>
+                                        </div>
+                                        <span className={`text-xs font-mono font-bold uppercase px-3 py-1.5 rounded-[8px] border ${
+                                            s11Res.overallPassed ? 'bg-white text-[#166534] border-[#BBF7D0]' : 'bg-white text-[#991B1B] border-[#FECACA]'
+                                        }`}>
+                                            {s11Res.overallPassed ? 'PASS' : 'FAIL'}
                                         </span>
                                     </div>
                                 </div>

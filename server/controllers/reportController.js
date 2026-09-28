@@ -15,6 +15,10 @@ const saveReport = async (req, res) => {
             form_zero, form_zero_results,
             form_tare, form_tare_results,
             form_tilt, form_tilt_results,
+            form_discrimination, form_discrimination_results,
+            form9, form9_results,
+            form10, form10_results,
+            form11, form11_results,
             reading_proofs,
             lab_details,
             instrument_photo,
@@ -47,6 +51,14 @@ const saveReport = async (req, res) => {
             form_tare_results,
             form_tilt_data:     form_tilt,
             form_tilt_results,
+            form_discrimination_data: form_discrimination,
+            form_discrimination_results,
+            form9_data:         form9,
+            form9_results,
+            form10_data:        form10,
+            form10_results,
+            form11_data:        form11,
+            form11_results,
             reading_proofs,
             lab_details,
             instrument_photo,
@@ -79,11 +91,11 @@ const saveReport = async (req, res) => {
 
 const getHistory = async (req, res) => {
     try {
-        const reports = await Report.find({}, "instrument_id instrument_data createdAt form1_results form2_results form3_results form_zero_results form_tare_results form_tilt_results createdBy rule_set_version sha256_hash report_status workflow_status").sort({ createdAt: -1 }).lean();
+        const reports = await Report.find({}, "instrument_id instrument_data createdAt form1_results form2_results form3_results form_zero_results form_tare_results form_tilt_results form_discrimination_results form9_results form10_results form11_results createdBy rule_set_version sha256_hash report_status workflow_status").sort({ createdAt: -1 }).lean();
         
         reports.forEach(r => {
             let isPass = true;
-            const results = [r.form1_results, r.form2_results, r.form3_results, r.form_zero_results, r.form_tare_results, r.form_tilt_results];
+            const results = [r.form1_results, r.form2_results, r.form3_results, r.form_zero_results, r.form_tare_results, r.form_tilt_results, r.form_discrimination_results, r.form9_results, r.form10_results, r.form11_results];
             for (let res of results) {
                 if (res) {
                     const str = JSON.stringify(res);

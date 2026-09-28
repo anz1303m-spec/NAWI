@@ -18,6 +18,14 @@ const ReportSchema = new mongoose.Schema({
     form_tare_results:       mongoose.Schema.Types.Mixed,
     form_tilt_data:          mongoose.Schema.Types.Mixed,   // Tilt test readings
     form_tilt_results:       mongoose.Schema.Types.Mixed,
+    form_discrimination_data: mongoose.Schema.Types.Mixed, // Discrimination test readings
+    form_discrimination_results: mongoose.Schema.Types.Mixed,
+    form9_data:              mongoose.Schema.Types.Mixed,   // Time-dependent error (Creep/Zero Return) readings
+    form9_results:           mongoose.Schema.Types.Mixed,
+    form10_data:             mongoose.Schema.Types.Mixed,   // Stability of equilibrium readings
+    form10_results:          mongoose.Schema.Types.Mixed,
+    form11_data:             mongoose.Schema.Types.Mixed,   // Warm-up time readings
+    form11_results:          mongoose.Schema.Types.Mixed,
     
     // Administrative & Integrity Fields
     reading_proofs:          mongoose.Schema.Types.Mixed, // Map of test reading keys -> photo metadata (Cloudinary URL, timestamp, lat, lng, labVerified)
