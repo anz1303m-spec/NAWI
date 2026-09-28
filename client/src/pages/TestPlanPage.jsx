@@ -71,58 +71,58 @@ export default function TestPlanPage() {
             <div className="app-main">
                 <Header title="Dynamic Test Planner" />
                 <div className="app-content">
-                    {/* Summary Card: Tactile Raised Warm Sand (No Gradients) */}
+                    {/* Summary Card */}
                     <div className="tactile-raised mb-6">
-                        <div className="flex justify-between items-center mb-3 pb-3 border-b border-[#DED7C8]">
+                        <div className="flex justify-between items-center mb-3 pb-3 border-b border-[#E2E8F0]">
                             <div>
-                                <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-widest block mb-0.5">
+                                <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest block mb-0.5">
                                     Metrological Evaluation Specification
                                 </span>
-                                <h2 className="text-lg font-bold text-[#1C1A17] font-['Outfit'] uppercase tracking-tight m-0">
+                                <h2 className="text-lg font-bold text-[#0F172A] font-['Outfit'] uppercase tracking-tight m-0">
                                     Automated Test Plan & Load Schedule
                                 </h2>
                             </div>
-                            <span className="bg-[#EAE4D6] border border-[#DED7C8] px-3 py-1 rounded-[11px] text-xs font-mono font-bold text-[#1C1A17] shadow-[inset_1px_1px_3px_#DBD3C3]">
+                            <span className="bg-[#F1F5F9] border border-[#E2E8F0] px-3 py-1 rounded-[11px] text-xs font-mono font-bold text-[#0F172A] shadow-[inset_1px_1px_3px_#CBD5E1]">
                                 TP-SCHEDULE
                             </span>
                         </div>
 
                         <div className="flex items-center gap-2 mb-3">
-                            <span className="bg-[#EAE4D6] text-[#1C1A17] border border-[#DED7C8] px-3 py-1 rounded-[11px] text-[11px] font-bold shadow-[inset_1px_1px_3px_#DBD3C3]">
-                                <i className="fas fa-book mr-1 text-[#5C5852]"></i> Governing Ruleset: {ruleSetVersion}
+                            <span className="bg-[#F1F5F9] text-[#0F172A] border border-[#E2E8F0] px-3 py-1 rounded-[11px] text-[11px] font-bold shadow-[inset_1px_1px_3px_#CBD5E1]">
+                                <i className="fas fa-book mr-1 text-[#475569]"></i> Governing Ruleset: {ruleSetVersion}
                             </span>
                         </div>
 
-                        <div className="text-xs text-[#5C5852] mb-4">
-                            <strong className="text-[#1C1A17]">{instrument.manufacturer} {instrument.model}</strong> &bull; Serial: {instrument.serial_no} &bull; Class: {instrument.Class_value} &bull; Capacity: {instrument.capacity} kg (e = {instrument.e_value} g)
+                        <div className="text-xs text-[#475569] mb-4">
+                            <strong className="text-[#0F172A]">{instrument.manufacturer} {instrument.model}</strong> &bull; Serial: {instrument.serial_no} &bull; Class: {instrument.Class_value} &bull; Capacity: {instrument.capacity} kg (e = {instrument.e_value} g)
                         </div>
 
-                        <div className="flex gap-4 flex-wrap border-t border-[#DED7C8] pt-3 text-xs">
-                            <span className="text-[#2D5A27] font-bold">{requiredCount} Required Tests</span>
-                            <span className="text-[#8C5815] font-bold">{optionalCount} Conditional Tests</span>
-                            <span className="text-[#1C1A17] font-bold">{loadPointsCount} Asc/Desc Load Points</span>
-                            <span className="text-[#7A7469]">Estimated Duration: ~15 min</span>
+                        <div className="flex gap-4 flex-wrap border-t border-[#E2E8F0] pt-3 text-xs">
+                            <span className="text-[#166534] font-bold">{requiredCount} Required Tests</span>
+                            <span className="text-[#92400E] font-bold">{optionalCount} Conditional Tests</span>
+                            <span className="text-[#0F172A] font-bold">{loadPointsCount} Asc/Desc Load Points</span>
+                            <span className="text-[#64748B]">Estimated Duration: ~15 min</span>
                         </div>
                     </div>
 
                     {/* Test List */}
                     <div className="mb-6">
-                        <h3 className="mt-0 mb-3 text-xs font-bold text-[#1C1A17] uppercase tracking-wider font-['Outfit']">
+                        <h3 className="mt-0 mb-3 text-xs font-bold text-[#0F172A] uppercase tracking-wider font-['Outfit']">
                             Evaluation Modules per OIML R 76-1
                         </h3>
                         
                         <div className="flex flex-col gap-3">
                             {testPlan.map((t) => (
-                                <div key={t.id} className="bg-[#F4F0E8] border border-[#DED7C8] rounded-[13px] p-4 flex items-center justify-between gap-4 shadow-[3px_3px_8px_#DBD3C3,-3px_-3px_8px_#FFFFFF]">
+                                <div key={t.id} className="bg-white border border-[#E2E8F0] rounded-[13px] p-4 flex items-center justify-between gap-4 shadow-sm">
                                     <div className="flex items-center gap-3.5">
-                                        <div className="w-10 h-10 bg-[#EAE4D6] border border-[#DED7C8] text-[#1C1A17] rounded-[11px] grid place-items-center text-sm shadow-[inset_1px_1px_3px_#DBD3C3]">
+                                        <div className="w-10 h-10 bg-[#F1F5F9] border border-[#E2E8F0] text-[#0F172A] rounded-[11px] grid place-items-center text-sm shadow-[inset_1px_1px_3px_#CBD5E1]">
                                             <i className={t.icon}></i>
                                         </div>
                                         <div>
-                                            <h4 className="m-0 mb-0.5 text-xs font-bold text-[#1C1A17] font-['Outfit'] uppercase">
+                                            <h4 className="m-0 mb-0.5 text-xs font-bold text-[#0F172A] font-['Outfit'] uppercase">
                                                 {t.id}. {t.name}
                                             </h4>
-                                            <p className="m-0 text-[11px] text-[#5C5852]">{t.note}</p>
+                                            <p className="m-0 text-[11px] text-[#475569]">{t.note}</p>
                                         </div>
                                     </div>
 
@@ -142,8 +142,8 @@ export default function TestPlanPage() {
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="flex items-center justify-between bg-[#F4F0E8] p-4 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                        <div className="text-xs font-bold text-[#2D5A27]">
+                    <div className="flex items-center justify-between bg-white p-4 rounded-[13px] border border-[#E2E8F0] shadow-sm">
+                        <div className="text-xs font-bold text-[#166534]">
                             <i className="fas fa-check-circle mr-1.5"></i> {requiredCount} required test modules ready for execution
                         </div>
                         <button className="btn px-6 py-2.5 text-xs tracking-wider uppercase font-bold" onClick={handleConfirm}>
@@ -151,28 +151,28 @@ export default function TestPlanPage() {
                         </button>
                     </div>
 
-                    {/* Modal: Tactile Convex Dialog */}
+                    {/* Modal */}
                     {selectedModalTest && (
-                        <div className="fixed inset-0 bg-[#1C1A17]/40 backdrop-blur-sm z-[1000] flex items-center justify-center p-5" onClick={() => setSelectedModalTest(null)}>
-                            <div className="bg-[#F4F0E8] rounded-[14px] p-6 max-w-lg w-full border border-[#DED7C8] shadow-[8px_8px_24px_#DBD3C3,-8px_-8px_24px_#FFFFFF]" onClick={e => e.stopPropagation()}>
-                                <div className="flex justify-between items-center pb-3 border-b border-[#DED7C8] mb-4">
-                                    <h3 className="m-0 text-sm font-bold text-[#1C1A17] uppercase tracking-wide font-['Outfit']">
+                        <div className="fixed inset-0 bg-[#0F172A]/40 backdrop-blur-sm z-[1000] flex items-center justify-center p-5" onClick={() => setSelectedModalTest(null)}>
+                            <div className="bg-white rounded-[14px] p-6 max-w-lg w-full border border-[#E2E8F0] shadow-xl" onClick={e => e.stopPropagation()}>
+                                <div className="flex justify-between items-center pb-3 border-b border-[#E2E8F0] mb-4">
+                                    <h3 className="m-0 text-sm font-bold text-[#0F172A] uppercase tracking-wide font-['Outfit']">
                                         {selectedModalTest.name} Specification
                                     </h3>
-                                    <button className="bg-transparent border-0 text-xl cursor-pointer text-[#7A7469] hover:text-[#1C1A17]" onClick={() => setSelectedModalTest(null)}>
+                                    <button className="bg-transparent border-0 text-xl cursor-pointer text-[#64748B] hover:text-[#0F172A]" onClick={() => setSelectedModalTest(null)}>
                                         &times;
                                     </button>
                                 </div>
-                                <p className="text-xs text-[#5C5852] leading-relaxed mb-4">{selectedModalTest.note}</p>
+                                <p className="text-xs text-[#475569] leading-relaxed mb-4">{selectedModalTest.note}</p>
                                 
                                 {selectedModalTest.testPoints && (
                                     <div>
-                                        <span className="text-[11px] font-bold text-[#1C1A17] uppercase tracking-wider block mb-2">
+                                        <span className="text-[11px] font-bold text-[#0F172A] uppercase tracking-wider block mb-2">
                                             Calculated Test Load Points:
                                         </span>
                                         <div className="flex flex-wrap gap-2">
                                             {selectedModalTest.testPoints.map((p, idx) => (
-                                                <span key={idx} className="bg-[#EAE4D6] border border-[#DED7C8] px-2.5 py-1 rounded-[11px] text-xs font-mono font-bold text-[#1C1A17] shadow-[inset_1px_1px_3px_#DBD3C3]">
+                                                <span key={idx} className="bg-[#F1F5F9] border border-[#E2E8F0] px-2.5 py-1 rounded-[11px] text-xs font-mono font-bold text-[#0F172A] shadow-[inset_1px_1px_3px_#CBD5E1]">
                                                     {p >= 1000 ? `${p/1000} kg` : `${p} g`}
                                                 </span>
                                             ))}
