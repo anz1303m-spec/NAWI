@@ -144,43 +144,53 @@ export default function NewTestPage() {
             voltage: formData.voltage
         };
 
-        localStorage.setItem("InstrumentData", JSON.stringify(formData));
-        localStorage.setItem("LabDetails", JSON.stringify(labDetails));
-        localStorage.setItem("AdministrativeEvidence", JSON.stringify(adminEvidence));
-        localStorage.setItem("InstrumentPhoto", photoFrontBase64 || photoNameplateBase64 || photoRearSideBase64 || "");
-        localStorage.setItem("RuleSetVersion", activeRule);
-        if (activeRuleRules) {
-            localStorage.setItem("RuleSetRules", JSON.stringify(activeRuleRules));
+        try {
+            localStorage.setItem("InstrumentData", JSON.stringify(formData));
+            localStorage.setItem("LabDetails", JSON.stringify(labDetails));
+            localStorage.setItem("AdministrativeEvidence", JSON.stringify(adminEvidence));
+            localStorage.setItem("InstrumentPhoto", photoFrontBase64 || photoNameplateBase64 || photoRearSideBase64 || "");
+            localStorage.setItem("RuleSetVersion", activeRule);
+            if (activeRuleRules) {
+                localStorage.setItem("RuleSetRules", JSON.stringify(activeRuleRules));
+            }
+
+            localStorage.setItem("Capacity", maxKg);
+            localStorage.setItem("eValue", eG);
+            localStorage.setItem("ClassValue", formData.Class_value);
+            localStorage.setItem("minCapacity", minG);
+
+            let isMobile = false;
+            let hasMultiPosition = true;
+
+            if (formData.instrument_type === "crane") {
+                hasMultiPosition = false;
+            } else if (formData.instrument_type === "mobile") {
+                isMobile = true;
+            }
+
+            localStorage.setItem("isMobile", isMobile ? "true" : "false");
+            localStorage.setItem("hasTare", "true");
+            localStorage.setItem("hasMultiPosition", hasMultiPosition ? "true" : "false");
+            localStorage.setItem("instrumentType", formData.instrument_type);
+
+            // Clear previous session data
+            [
+                "confirmedTestPlan", "testPlan", "testPoints_g",
+                "form0", "form0_results", "form1", "form1_results",
+                "form2", "form2_results", "form3", "form3_results",
+                "form_zero", "form_zero_results", "form_tare", "form_tare_results",
+                "form_tilt", "form_tilt_results",
+                "evidence_1", "evidence_2", "evidence_3", "evidence_4", "evidence_5", "evidence_6", "evidence_8"
+            ].forEach(k => localStorage.removeItem(k));
+        } catch (err) {
+            console.error("Failed to save session data:", err);
+            if (err.name === "QuotaExceededError" || err.code === 22) {
+                alert("Storage quota exceeded. The uploaded files may be too large. Please try smaller images (under 1 MB each) or clear your browser data and retry.");
+            } else {
+                alert("An unexpected error occurred while saving session data. Please try again.");
+            }
+            return;
         }
-
-        localStorage.setItem("Capacity", maxKg);
-        localStorage.setItem("eValue", eG);
-        localStorage.setItem("ClassValue", formData.Class_value);
-        localStorage.setItem("minCapacity", minG);
-
-        let isMobile = false;
-        let hasMultiPosition = true;
-
-        if (formData.instrument_type === "crane") {
-            hasMultiPosition = false;
-        } else if (formData.instrument_type === "mobile") {
-            isMobile = true;
-        }
-
-        localStorage.setItem("isMobile", isMobile ? "true" : "false");
-        localStorage.setItem("hasTare", "true");
-        localStorage.setItem("hasMultiPosition", hasMultiPosition ? "true" : "false");
-        localStorage.setItem("instrumentType", formData.instrument_type);
-
-        // Clear previous session data
-        [
-            "confirmedTestPlan", "testPlan", "testPoints_g",
-            "form0", "form0_results", "form1", "form1_results",
-            "form2", "form2_results", "form3", "form3_results",
-            "form_zero", "form_zero_results", "form_tare", "form_tare_results",
-            "form_tilt", "form_tilt_results",
-            "evidence_1", "evidence_2", "evidence_3", "evidence_4", "evidence_5", "evidence_6", "evidence_8"
-        ].forEach(k => localStorage.removeItem(k));
 
         navigate('/test-plan');
     };
@@ -463,9 +473,9 @@ export default function NewTestPage() {
                                 <div className="form-group">
                                     <label>Testing Ambient Conditions</label>
                                     <div className="grid grid-cols-3 gap-2">
-                                        <input type="number" name="temperature" placeholder="Temp (°C)" className="form-input text-xs" value={formData.temperature} onChange={handleChange} required />
-                                        <input type="number" name="humidity" placeholder="Hum (%)" className="form-input text-xs" value={formData.humidity} onChange={handleChange} required />
-                                        <input type="number" name="voltage" placeholder="Supply (V)" className="form-input text-xs" value={formData.voltage} onChange={handleChange} required />
+                                        <input type="number" name="temperature" placeholder="Temp (°C)" className="form-input" value={formData.temperature} onChange={handleChange} required />
+                                        <input type="number" name="humidity" placeholder="Hum (%)" className="form-input" value={formData.humidity} onChange={handleChange} required />
+                                        <input type="number" name="voltage" placeholder="Supply (V)" className="form-input" value={formData.voltage} onChange={handleChange} required />
                                     </div>
                                 </div>
                             </div>

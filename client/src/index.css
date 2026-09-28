@@ -224,7 +224,7 @@ p {
     letter-spacing: 0.5px;
 }
 
-.form-input,
+/* Element-level selectors: always full-width */
 .form-input-group input,
 select,
 textarea,
@@ -234,12 +234,26 @@ input[type="password"],
 input[type="number"],
 input[type="search"] {
     width: 100%;
-    padding: 10px 14px;
+}
+
+/* Shared input styling — .form-input does NOT force width so Tailwind
+   layout utilities (flex-1, w-20, etc.) can control sizing in flex containers */
+.form-input,
+.form-input-group input,
+select,
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"] {
+    padding: 12px 16px;
+    min-height: 44px;
     background-color: var(--bg-recessed);
     border: 1px solid var(--border-divider);
     border-radius: var(--radius-standard);
     font-family: var(--font-body);
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     color: var(--charcoal-solid);
     box-shadow: inset 2px 2px 4px var(--shadow-ambient), inset -1px -1px 3px var(--shadow-highlight);
     transition: border-color 0.2s, box-shadow 0.2s;
