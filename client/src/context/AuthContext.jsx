@@ -53,16 +53,26 @@ export function AuthProvider({ children }) {
     const checkAuth = async () => {
         try {
             const res = await fetch(getApiUrl('/api/auth/me'), { credentials: 'include' });
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                setUser(null);
+                return;
+            }
             const data = await res.json();
             if (data.authenticated && data.user) {
                 setUser(data.user);
             } else {
                 // Try silent refresh
                 const refreshRes = await fetch(getApiUrl('/api/auth/refresh'), { method: 'POST', credentials: 'include' });
-                const refreshData = await refreshRes.json();
-                if (refreshRes.ok && refreshData.accessToken) {
-                    setAccessToken(refreshData.accessToken);
-                    setUser(refreshData.user);
+                const refreshContentType = refreshRes.headers.get('content-type');
+                if (refreshContentType && refreshContentType.includes('application/json')) {
+                    const refreshData = await refreshRes.json();
+                    if (refreshRes.ok && refreshData.accessToken) {
+                        setAccessToken(refreshData.accessToken);
+                        setUser(refreshData.user);
+                    } else {
+                        setUser(null);
+                    }
                 } else {
                     setUser(null);
                 }
@@ -78,14 +88,35 @@ export function AuthProvider({ children }) {
         checkAuth();
     }, []);
 
+    const parseJsonResponse = async (res, defaultErrMsg = 'Server error occurred') => {
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            try {
+                return await res.json();
+            } catch (err) {
+                throw new Error('Invalid JSON response from server');
+            }
+        }
+        if (!res.ok) {
+            throw new Error(`Server connection failed (${res.status} ${res.statusText}). Please check if the backend server is running.`);
+        }
+        throw new Error(defaultErrMsg);
+    };
+
     const login = async (email, password) => {
-        const res = await fetch(getApiUrl('/api/auth/login'), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
+        let res;
+        try {
+            res = await fetch(getApiUrl('/api/auth/login'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ email, password })
+            });
+        } catch (netErr) {
+            throw new Error('Unable to reach backend server. Please make sure backend server is running on port 5000.');
+        }
+
+        const data = await parseJsonResponse(res, 'Login failed');
         if (!res.ok) {
             throw new Error(data.error || 'Invalid email or password');
         }
@@ -95,13 +126,19 @@ export function AuthProvider({ children }) {
     };
 
     const register = async (name, email, password, role = 'tester') => {
-        const res = await fetch(getApiUrl('/api/auth/register'), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ name, email, password, role })
-        });
-        const data = await res.json();
+        let res;
+        try {
+            res = await fetch(getApiUrl('/api/auth/register'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ name, email, password, role })
+            });
+        } catch (netErr) {
+            throw new Error('Unable to reach backend server. Please make sure backend server is running on port 5000.');
+        }
+
+        const data = await parseJsonResponse(res, 'Registration failed');
         if (!res.ok) {
             throw new Error(data.error || 'Registration failed');
         }
