@@ -167,9 +167,7 @@ const verifyReport = async (req, res) => {
         // Recompute SHA-256 hash to verify data integrity
         const computedHash = computeReportHash(report);
         const storedHash = report.sha256_hash || computedHash;
-
         const isTampered = computedHash !== storedHash;
-        const status = isTampered ? "TAMPERED" : "VERIFIED";
 
         // Determine overall Pass/Fail status
         let isPass = true;
@@ -181,7 +179,11 @@ const verifyReport = async (req, res) => {
             }
         }
 
-        if (status === "TAMPERED") {
+        // Determine workflow authorization status: must be APPROVED, CERTIFIED, or ISSUED by Admin to be CONFIRMED
+        const isApproved = ["APPROVED", "CERTIFIED", "ISSUED"].includes(report.workflow_status);
+        const verificationStatus = isTampered ? "TAMPERED" : (isApproved ? "VERIFIED" : "PENDING_APPROVAL");
+
+        if (isTampered) {
             return res.json({
                 status: "TAMPERED",
                 reportId: `TP-${report._id.toString().substring(0, 8).toUpperCase()}`,
@@ -190,7 +192,9 @@ const verifyReport = async (req, res) => {
         }
 
         res.json({
-            status: "VERIFIED",
+            status: verificationStatus,
+            workflowStatus: report.workflow_status || "SUBMITTED",
+            isApproved,
             reportId: `TP-${report._id.toString().substring(0, 8).toUpperCase()}`,
             rawId: report._id,
             isSuperseded: report.report_status === "SUPERSEDED",

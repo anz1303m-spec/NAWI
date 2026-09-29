@@ -120,36 +120,78 @@ export default function PublicVerifyPage() {
                                 Enter an official certificate ID above or scan the QR code printed on the physical certificate to query its mathematical seal and test observations.
                             </p>
                         </div>
+                    ) : data?.status === 'PENDING_APPROVAL' ? (
+                        /* PENDING VERIFICATION APPROVAL STATE */
+                        <div className="space-y-4">
+                            <div className="bg-[#FEF3C7] border border-[#FDE68A] rounded-[14px] p-4 text-center shadow-sm">
+                                <span className="inline-block text-lg mb-1 text-[#92400E]"><i className="fas fa-hourglass-half"></i></span>
+                                <h2 className="text-sm font-bold text-[#92400E] m-0 uppercase tracking-wide font-['Outfit']">
+                                    Verification Pending Official Approval
+                                </h2>
+                                <p className="text-[11px] text-[#B45309] font-semibold mt-1 mb-0">
+                                    Readings and observations submitted. Awaiting quality reviewer and verifier sign-off before official certificate release.
+                                </p>
+                            </div>
+
+                            {/* Workflow Stage Details */}
+                            <div className="bg-white p-4 rounded-[14px] border border-[#E2E8F0] shadow-sm text-xs space-y-2">
+                                <div className="flex justify-between items-center pb-2 border-b border-[#E2E8F0]">
+                                    <span className="font-bold text-[#0F172A]">REPORT / CERTIFICATE ID</span>
+                                    <span className="font-mono text-[#2563EB] font-bold">{data.reportId}</span>
+                                </div>
+                                <div className="flex justify-between items-center pb-2 border-b border-[#E2E8F0]">
+                                    <span className="font-bold text-[#0F172A]">CURRENT WORKFLOW STAGE</span>
+                                    <span className="status-badge status-pending">{data.workflowStatus || 'UNDER REVIEW'}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="font-bold text-[#0F172A]">SUBMITTED BY</span>
+                                    <span className="text-[#64748B] font-semibold">{data.reviewChain?.[0]?.name || 'Verification Officer'}</span>
+                                </div>
+                            </div>
+
+                            {/* Instrument Details Well */}
+                            <div className="bg-[#F8FAFC] p-4 rounded-[14px] border border-[#E2E8F0] shadow-sm text-xs">
+                                <h4 className="m-0 mb-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider">
+                                    <i className="fas fa-balance-scale mr-1.5 text-[#2563EB]"></i> Instrument Specifications
+                                </h4>
+                                <div className="grid grid-cols-2 gap-2 text-[#0F172A]">
+                                    <div><span className="text-[#64748B]">Make:</span> {data.instrument?.manufacturer || 'N/A'}</div>
+                                    <div><span className="text-[#64748B]">Model:</span> {data.instrument?.model || 'N/A'}</div>
+                                    <div><span className="text-[#64748B]">Serial:</span> {data.instrument?.serialNumber || 'N/A'}</div>
+                                    <div><span className="text-[#64748B]">Class:</span> {data.instrument?.accuracyClass || 'N/A'}</div>
+                                </div>
+                            </div>
+                        </div>
                     ) : data?.status === 'VERIFIED' ? (
                         /* VERIFIED STATE */
                         <div className="space-y-4">
                             {/* Status Banner */}
-                            <div className="bg-[#E2EBDC] border border-[#C5DAC0] rounded-[13px] p-4 text-center">
-                                <span className="inline-block text-lg mb-1">✓</span>
-                                <h2 className="text-sm font-bold text-[#2D5A27] m-0 uppercase tracking-wide font-['Outfit']">
+                            <div className="bg-[#DCFCE7] border border-[#BBF7D0] rounded-[14px] p-4 text-center shadow-sm">
+                                <span className="inline-block text-lg mb-1 text-[#166534]">✓</span>
+                                <h2 className="text-sm font-bold text-[#166534] m-0 uppercase tracking-wide font-['Outfit']">
                                     Official Certificate Confirmed
                                 </h2>
-                                <p className="text-[11px] text-[#2D5A27] font-semibold mt-0.5 mb-0">
+                                <p className="text-[11px] text-[#15803D] font-semibold mt-0.5 mb-0">
                                     Authentic and cryptographically untampered record
                                 </p>
                             </div>
 
                             {/* Superseded Warning if applicable */}
                             {data.isSuperseded && (
-                                <div className="bg-[#F5ECCF] border border-[#EBDCAC] rounded-[13px] p-3 text-xs text-[#8C5815] font-semibold flex items-center gap-2">
+                                <div className="bg-[#FEF3C7] border border-[#FDE68A] rounded-[14px] p-3 text-xs text-[#92400E] font-semibold flex items-center gap-2">
                                     <i className="fas fa-exclamation-triangle"></i>
                                     <span>Notice: This certificate has been superseded by a subsequent revision.</span>
                                 </div>
                             )}
 
                             {/* Report Header */}
-                            <div className="flex justify-between items-center pb-3 border-b border-[#DED7C8]">
+                            <div className="flex justify-between items-center pb-3 border-b border-[#E2E8F0]">
                                 <div>
-                                    <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-wider block">Certificate ID</span>
-                                    <span className="text-sm font-bold text-[#1C1A17] font-mono">{data.reportId}</span>
+                                    <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">Certificate ID</span>
+                                    <span className="text-sm font-bold text-[#0F172A] font-mono">{data.reportId}</span>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-wider block">Evaluation Result</span>
+                                    <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">Evaluation Result</span>
                                     <span className={`status-badge ${data.overallResult === 'PASS' ? 'status-pass' : 'status-fail'}`}>
                                         {data.overallResult}
                                     </span>
@@ -157,53 +199,53 @@ export default function PublicVerifyPage() {
                             </div>
 
                             {/* Instrument Details Well */}
-                            <div className="bg-[#EAE4D6] p-3.5 rounded-[13px] border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3] text-xs">
-                                <h4 className="m-0 mb-2 text-xs font-bold text-[#1C1A17] uppercase tracking-wider">
-                                    <i className="fas fa-balance-scale mr-1.5 text-[#5C5852]"></i> Instrument Specifications
+                            <div className="bg-[#F8FAFC] p-3.5 rounded-[14px] border border-[#E2E8F0] shadow-sm text-xs">
+                                <h4 className="m-0 mb-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider">
+                                    <i className="fas fa-balance-scale mr-1.5 text-[#2563EB]"></i> Instrument Specifications
                                 </h4>
-                                <div className="grid grid-cols-2 gap-2 text-[#1C1A17]">
-                                    <div><span className="text-[#7A7469]">Make:</span> {data.instrument.manufacturer}</div>
-                                    <div><span className="text-[#7A7469]">Model:</span> {data.instrument.model}</div>
-                                    <div><span className="text-[#7A7469]">Serial:</span> {data.instrument.serialNumber}</div>
-                                    <div><span className="text-[#7A7469]">Class:</span> {data.instrument.accuracyClass}</div>
+                                <div className="grid grid-cols-2 gap-2 text-[#0F172A]">
+                                    <div><span className="text-[#64748B]">Make:</span> {data.instrument.manufacturer}</div>
+                                    <div><span className="text-[#64748B]">Model:</span> {data.instrument.model}</div>
+                                    <div><span className="text-[#64748B]">Serial:</span> {data.instrument.serialNumber}</div>
+                                    <div><span className="text-[#64748B]">Class:</span> {data.instrument.accuracyClass}</div>
                                 </div>
                             </div>
 
                             {/* Facility & Date */}
-                            <div className="text-xs text-[#5C5852] space-y-1">
-                                <div><strong className="text-[#1C1A17]">Laboratory:</strong> {data.lab.name || "National Metrology Laboratory"} ({data.lab.location || "HQ"})</div>
-                                <div><strong className="text-[#1C1A17]">Date of Test:</strong> {new Date(data.testDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
-                                <div><strong className="text-[#1C1A17]">Governing Standard:</strong> {data.ruleSetVersion}</div>
+                            <div className="text-xs text-[#64748B] space-y-1">
+                                <div><strong className="text-[#0F172A]">Laboratory:</strong> {data.lab.name || "National Metrology Laboratory"} ({data.lab.location || "HQ"})</div>
+                                <div><strong className="text-[#0F172A]">Date of Test:</strong> {new Date(data.testDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                                <div><strong className="text-[#0F172A]">Governing Standard:</strong> {data.ruleSetVersion}</div>
                             </div>
 
                             {/* Review Accountability Chain */}
-                            <div className="bg-[#EAE4D6] p-3 rounded-[13px] border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3]">
-                                <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-wider block mb-1.5">
+                            <div className="bg-[#F8FAFC] p-3 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                                <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block mb-1.5">
                                     Authorized Signoff Chain
                                 </span>
                                 <div className="flex gap-2 flex-wrap text-xs">
                                     {data.reviewChain?.map((person, idx) => (
-                                        <div key={idx} className="bg-[#F4F0E8] px-2.5 py-1 rounded-[11px] border border-[#DED7C8] text-[#1C1A17]">
-                                            <span className="font-bold">{person.name}</span> <span className="text-[#7A7469]">({person.role})</span>
+                                        <div key={idx} className="bg-white px-2.5 py-1 rounded-[10px] border border-[#E2E8F0] text-[#0F172A]">
+                                            <span className="font-bold">{person.name}</span> <span className="text-[#64748B]">({person.role})</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* SHA-256 Hash Seal Box: Concave Recessed Well */}
-                            <div className="bg-[#EAE4D6] p-3 rounded-[13px] border border-[#DED7C8] shadow-[inset_2px_2px_5px_#DBD3C3,inset_-2px_-2px_5px_#FFFFFF]">
+                            {/* SHA-256 Hash Seal Box */}
+                            <div className="bg-[#F8FAFC] p-3 rounded-[14px] border border-[#E2E8F0] shadow-sm">
                                 <div className="flex justify-between items-center mb-1">
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#1C1A17]">
-                                        <i className="fas fa-key mr-1 text-[#5C5852]"></i> SHA-256 Cryptographic Seal
+                                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#0F172A]">
+                                        <i className="fas fa-key mr-1 text-[#2563EB]"></i> SHA-256 Cryptographic Seal
                                     </span>
                                     <button
                                         onClick={handleCopyHash}
-                                        className="bg-transparent border-0 text-[#1C1A17] text-[10px] font-bold cursor-pointer hover:underline"
+                                        className="bg-transparent border-0 text-[#2563EB] text-[10px] font-bold cursor-pointer hover:underline"
                                     >
                                         {copied ? '✓ Copied' : 'Copy Hash'}
                                     </button>
                                 </div>
-                                <div className="font-mono text-[11px] break-all text-[#1C1A17] bg-[#F4F0E8] p-2 rounded-[11px] border border-[#DED7C8]">
+                                <div className="font-mono text-[11px] break-all text-[#0F172A] bg-white p-2 rounded-[10px] border border-[#E2E8F0]">
                                     {data.sha256Hash}
                                 </div>
                             </div>
@@ -219,16 +261,16 @@ export default function PublicVerifyPage() {
                     ) : data?.status === 'TAMPERED' ? (
                         /* TAMPERED STATE */
                         <div className="text-center py-4">
-                            <div className="bg-[#F5DDDC] border border-[#EBC3C2] rounded-[13px] p-5 mb-4">
-                                <div className="text-2xl text-[#8B2522] mb-1">⚠️</div>
-                                <h2 className="text-sm font-bold text-[#8B2522] mb-1 uppercase tracking-wide font-['Outfit']">
+                            <div className="bg-[#FEE2E2] border border-[#FECACA] rounded-[14px] p-5 mb-4 shadow-sm">
+                                <div className="text-2xl text-[#991B1B] mb-1">⚠️</div>
+                                <h2 className="text-sm font-bold text-[#991B1B] mb-1 uppercase tracking-wide font-['Outfit']">
                                     Cryptographic Verification Failed
                                 </h2>
-                                <p className="m-0 text-xs text-[#8B2522] font-semibold">
+                                <p className="m-0 text-xs text-[#991B1B] font-semibold">
                                     This document payload does not match its issued SHA-256 seal.
                                 </p>
                             </div>
-                            <p className="text-xs text-[#5C5852] leading-relaxed mb-4">
+                            <p className="text-xs text-[#64748B] leading-relaxed mb-4">
                                 The record for ID "<strong>{activeId}</strong>" contains discrepancies from the original signed calibration event. Please contact the legal metrology authority directly.
                             </p>
                         </div>
