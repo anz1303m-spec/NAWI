@@ -241,26 +241,26 @@ export default function ViewerDashboardPage() {
 
                     {/* Overview / Analytics Section */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '24px' }}>
-                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', marginBottom: 0, border: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF' }}>
-                            <div style={{ width: '46px', height: '46px', borderRadius: '11px', background: '#EAE4D6', color: '#1C1A17', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #DED7C8', boxShadow: 'inset 1px 1px 3px #DBD3C3' }}>
+                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', marginBottom: 0, border: '1px solid #E2E8F0', background: '#FFFFFF', borderRadius: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                            <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#F8FAFC', color: '#0F172A', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #E2E8F0' }}>
                                 <i className="fas fa-users-cog"></i>
                             </div>
                             <div>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#5C5852', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     System Testers / Labs
                                 </div>
-                                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1C1A17', fontFamily: 'IBM Plex Mono, monospace' }}>
+                                <div style={{ fontSize: '1.5rem', fontWeight 700, color: '#0F172A', fontFamily: 'IBM Plex Mono, monospace' }}>
                                     {statsLoading ? '...' : stats.labsCount}
                                 </div>
                             </div>
                         </div>
 
-                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '4px solid #1C1A17', borderTop: '1px solid #DED7C8', borderRight: '1px solid #DED7C8', borderBottom: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF', marginBottom: 0 }}>
-                            <div style={{ width: '46px', height: '46px', borderRadius: '11px', background: '#EAE4D6', color: '#8C5815', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #DED7C8', boxShadow: 'inset 1px 1px 3px #DBD3C3' }}>
+                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '4px solid #2563EB', borderTop: '1px solid #E2E8F0', borderRight: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0', background: '#FFFFFF', borderRadius: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', marginBottom: 0 }}>
+                            <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#EFF6FF', color: '#2563EB', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #BFDBFE' }}>
                                 <i className="fas fa-hourglass-half"></i>
                             </div>
                             <div>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#5C5852', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Pending Review Queue
                                 </div>
                                 <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#8C5815', fontFamily: 'IBM Plex Mono, monospace' }}>

@@ -36,7 +36,7 @@ export default function ReportSummaryPage() {
         </div>
     );
     if (!report) return (
-        <div className="min-h-screen bg-[#F4F0E8] flex items-center justify-center p-6 text-center text-[#8B2522] font-bold">
+        <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 text-center text-[#991B1B] font-bold">
             Report not found!
         </div>
     );
@@ -74,42 +74,42 @@ export default function ReportSummaryPage() {
             <div className="app-main">
                 <Header title={`Report Summary: TP-${report._id.substring(0, 8).toUpperCase()}`} />
                 <div className="app-content">
-                    <div className="tactile-raised max-w-4xl mx-auto mb-6">
-                        <div className="flex justify-between items-center pb-4 mb-5 border-b border-[#DED7C8]">
+                    <div className="tactile-raised max-w-4xl mx-auto mb-6 bg-white border border-[#E2E8F0] shadow-sm rounded-[14px]">
+                        <div className="flex justify-between items-center pb-4 mb-5 border-b border-[#E2E8F0]">
                             <div>
-                                <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-widest block mb-0.5">
+                                <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest block mb-0.5">
                                     Metrological Evaluation Summary
                                 </span>
-                                <h2 className="m-0 text-base md:text-lg font-bold text-[#1C1A17] font-['Outfit'] uppercase tracking-tight">
+                                <h2 className="m-0 text-base md:text-lg font-bold text-[#0F172A] font-['Outfit'] uppercase tracking-tight">
                                     Test Results Summary
                                 </h2>
-                                <div className="text-xs text-[#5C5852] mt-1 font-semibold">
-                                    <i className="fas fa-book mr-1 text-[#7A7469]"></i> Governing Ruleset: {report.rule_set_version || 'OIML R-76 V1'}
+                                <div className="text-xs text-[#64748B] mt-1 font-semibold">
+                                    <i className="fas fa-book mr-1 text-[#2563EB]"></i> Governing Ruleset: {report.rule_set_version || 'OIML R-76 V1'}
                                 </div>
                             </div>
-                            <span className="bg-[#EAE4D6] border border-[#DED7C8] text-[#1C1A17] px-3.5 py-1.5 rounded-[11px] font-bold text-xs font-mono shadow-[inset_1px_1px_3px_#DBD3C3]">
+                            <span className="bg-[#EFF6FF] border border-[#BFDBFE] text-[#2563EB] px-3.5 py-1.5 rounded-[10px] font-bold text-xs font-mono">
                                 TP-{report._id.substring(0, 8).toUpperCase()}
                             </span>
                         </div>
 
                         {/* Instrument Details Well */}
-                        <div className="bg-[#EAE4D6] p-4 rounded-[13px] border border-[#DED7C8] mb-5 shadow-[inset_1px_1px_3px_#DBD3C3]">
-                            <h3 className="m-0 mb-2 text-xs font-bold text-[#1C1A17] uppercase tracking-wider font-['Outfit']">
+                        <div className="bg-[#F8FAFC] p-4 rounded-[12px] border border-[#E2E8F0] mb-5 shadow-sm">
+                            <h3 className="m-0 mb-2 text-xs font-bold text-[#0F172A] uppercase tracking-wider font-['Outfit']">
                                 Instrument: {report.instrument_id || "Unknown"}
                             </h3>
-                            <div className="flex gap-4 flex-wrap text-xs text-[#5C5852]">
-                                <span><strong className="text-[#1C1A17]">Class:</strong> {report.instrument_data?.Class_value || 'N/A'}</span>
-                                <span><strong className="text-[#1C1A17]">Capacity:</strong> {report.instrument_data?.capacity || 'N/A'} kg</span>
-                                <span><strong className="text-[#1C1A17]">Verification Interval (e):</strong> {report.instrument_data?.e_value || 'N/A'} g</span>
-                                <span><strong className="text-[#1C1A17]">Serial:</strong> {report.instrument_data?.serial_no || 'N/A'}</span>
+                            <div className="flex gap-4 flex-wrap text-xs text-[#64748B]">
+                                <span><strong className="text-[#0F172A]">Class:</strong> {report.instrument_data?.Class_value || 'N/A'}</span>
+                                <span><strong className="text-[#0F172A]">Capacity:</strong> {report.instrument_data?.capacity || 'N/A'} kg</span>
+                                <span><strong className="text-[#0F172A]">Verification Interval (e):</strong> {report.instrument_data?.e_value || 'N/A'} g</span>
+                                <span><strong className="text-[#0F172A]">Serial:</strong> {report.instrument_data?.serial_no || 'N/A'}</span>
                             </div>
                         </div>
 
                         {/* Workflow Status Banner */}
-                        <div className="bg-[#F4F0E8] border border-[#DED7C8] rounded-[13px] p-4 mb-5 shadow-[2px_2px_6px_#DBD3C3]">
+                        <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] p-4 mb-5 shadow-sm">
                             <div className="flex justify-between items-center mb-3">
-                                <span className="font-bold text-xs text-[#1C1A17] uppercase tracking-wider flex items-center gap-1.5">
-                                    <i className="fas fa-network-wired text-[#5C5852]"></i> Verification Workflow Stage
+                                <span className="font-bold text-xs text-[#0F172A] uppercase tracking-wider flex items-center gap-1.5">
+                                    <i className="fas fa-network-wired text-[#2563EB]"></i> Verification Workflow Stage
                                 </span>
                                 <span className={`status-badge ${
                                     ['REJECTED_BY_VIEWER', 'REJECTED_BY_ADMIN'].includes(report.workflow_status)
@@ -123,15 +123,15 @@ export default function ReportSummaryPage() {
                             </div>
 
                             {/* Chain of Custody */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[#5C5852]">
-                                <div><strong className="text-[#1C1A17]">Tester:</strong> {report.createdBy || 'Inspection Officer'}</div>
-                                <div><strong className="text-[#1C1A17]">Reviewer:</strong> {report.reviewedBy || 'Quality Reviewer'}</div>
-                                <div><strong className="text-[#1C1A17]">Authority:</strong> {report.approvedBy || 'Admin Authority'}</div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[#64748B]">
+                                <div><strong className="text-[#0F172A]">Tester:</strong> {report.createdBy || 'Inspection Officer'}</div>
+                                <div><strong className="text-[#0F172A]">Reviewer:</strong> {report.reviewedBy || 'Quality Reviewer'}</div>
+                                <div><strong className="text-[#0F172A]">Authority:</strong> {report.approvedBy || 'Admin Authority'}</div>
                             </div>
 
                             {/* Rejection Comments Box */}
                             {['REJECTED_BY_VIEWER', 'REJECTED_BY_ADMIN', 'SENT_BACK_TO_TESTER'].includes(report.workflow_status) && (
-                                <div className="mt-3.5 p-3 bg-[#F5DDDC] border border-[#EBC3C2] rounded-[11px] text-xs text-[#8B2522]">
+                                <div className="mt-3.5 p-3 bg-[#FEE2E2] border border-[#FECACA] rounded-[10px] text-xs text-[#991B1B]">
                                     <strong><i className="fas fa-comment-dots mr-1"></i> Reviewer Comments:</strong>
                                     <div className="mt-1">
                                         {report.review_history && report.review_history.length > 0 ? (
@@ -144,33 +144,33 @@ export default function ReportSummaryPage() {
 
                         {/* Uploaded Instrument Photographs Gallery */}
                         {((report.administrative_evidence && report.administrative_evidence.photos) || report.instrument_photo) && (
-                            <div className="mb-5 p-4 bg-[#EAE4D6] border border-[#DED7C8] rounded-[13px] shadow-[inset_1px_1px_3px_#DBD3C3]">
-                                <h4 className="m-0 mb-3 text-xs font-bold text-[#1C1A17] uppercase tracking-wider font-['Outfit'] flex items-center gap-1.5">
-                                    <i className="fas fa-camera text-[#5C5852]"></i> Verified Instrument Photographs
+                            <div className="mb-5 p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] shadow-sm">
+                                <h4 className="m-0 mb-3 text-xs font-bold text-[#0F172A] uppercase tracking-wider font-['Outfit'] flex items-center gap-1.5">
+                                    <i className="fas fa-camera text-[#2563EB]"></i> Verified Instrument Photographs
                                 </h4>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     {report.administrative_evidence?.photos?.front && (
-                                        <div className="rounded-[11px] overflow-hidden border border-[#DED7C8] bg-[#F4F0E8]">
+                                        <div className="rounded-[10px] overflow-hidden border border-[#E2E8F0] bg-white">
                                             <img src={report.administrative_evidence.photos.front} alt="Front View" className="w-full h-28 object-cover" />
-                                            <div className="p-1.5 text-[10px] font-bold text-[#1C1A17] text-center">Front View Photo</div>
+                                            <div className="p-1.5 text-[10px] font-bold text-[#0F172A] text-center">Front View Photo</div>
                                         </div>
                                     )}
                                     {report.administrative_evidence?.photos?.nameplate && (
-                                        <div className="rounded-[11px] overflow-hidden border border-[#DED7C8] bg-[#F4F0E8]">
+                                        <div className="rounded-[10px] overflow-hidden border border-[#E2E8F0] bg-white">
                                             <img src={report.administrative_evidence.photos.nameplate} alt="Nameplate" className="w-full h-28 object-cover" />
-                                            <div className="p-1.5 text-[10px] font-bold text-[#1C1A17] text-center">Nameplate / Markings</div>
+                                            <div className="p-1.5 text-[10px] font-bold text-[#0F172A] text-center">Nameplate / Markings</div>
                                         </div>
                                     )}
                                     {report.administrative_evidence?.photos?.rear_side && (
-                                        <div className="rounded-[11px] overflow-hidden border border-[#DED7C8] bg-[#F4F0E8]">
+                                        <div className="rounded-[10px] overflow-hidden border border-[#E2E8F0] bg-white">
                                             <img src={report.administrative_evidence.photos.rear_side} alt="Rear View" className="w-full h-28 object-cover" />
-                                            <div className="p-1.5 text-[10px] font-bold text-[#1C1A17] text-center">Rear / Side View</div>
+                                            <div className="p-1.5 text-[10px] font-bold text-[#0F172A] text-center">Rear / Side View</div>
                                         </div>
                                     )}
                                     {!report.administrative_evidence?.photos?.front && report.instrument_photo && (
-                                        <div className="rounded-[11px] overflow-hidden border border-[#DED7C8] bg-[#F4F0E8]">
+                                        <div className="rounded-[10px] overflow-hidden border border-[#E2E8F0] bg-white">
                                             <img src={report.instrument_photo} alt="Instrument Photo" className="w-full h-28 object-cover" />
-                                            <div className="p-1.5 text-[10px] font-bold text-[#1C1A17] text-center">Instrument Photo</div>
+                                            <div className="p-1.5 text-[10px] font-bold text-[#0F172A] text-center">Instrument Photo</div>
                                         </div>
                                     )}
                                 </div>
@@ -191,13 +191,13 @@ export default function ReportSummaryPage() {
                                 const st = testStatus[key];
                                 if (!st) return null;
                                 return (
-                                    <div key={key} className="flex justify-between items-center p-3 bg-[#F4F0E8] border border-[#DED7C8] rounded-[11px] shadow-[1px_1px_4px_#DBD3C3]">
+                                    <div key={key} className="flex justify-between items-center p-3 bg-white border border-[#E2E8F0] rounded-[10px] shadow-sm">
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <h4 className="m-0 text-xs font-bold text-[#1C1A17] font-['Outfit'] uppercase">{item.label}</h4>
-                                                <span className="text-[10px] bg-[#EAE4D6] text-[#5C5852] px-2 py-0.5 rounded-[6px] font-mono border border-[#DED7C8]">{item.clause}</span>
+                                                <h4 className="m-0 text-xs font-bold text-[#0F172A] font-['Outfit'] uppercase">{item.label}</h4>
+                                                <span className="text-[10px] bg-[#EFF6FF] text-[#2563EB] px-2 py-0.5 rounded-[6px] font-mono border border-[#BFDBFE]">{item.clause}</span>
                                             </div>
-                                            <span className="text-[11px] text-[#5C5852]">{item.sub}</span>
+                                            <span className="text-[11px] text-[#64748B]">{item.sub}</span>
                                         </div>
                                         {user?.role === 'tester' ? (
                                             <span className="status-badge status-neutral">
@@ -215,28 +215,28 @@ export default function ReportSummaryPage() {
 
                         {/* Overall Result / Status Banner */}
                         {user?.role === 'tester' ? (
-                            <div className="bg-[#EAE4D6] border border-[#DED7C8] rounded-[13px] p-5 text-center mb-6 shadow-[inset_1px_1px_3px_#DBD3C3]">
-                                <h4 className="m-0 text-xs font-bold text-[#1C1A17] uppercase tracking-wider mb-1">
-                                    <i className="fas fa-paper-plane mr-1.5 text-[#5C5852]"></i> Readings & Proofs Submitted for Review
+                            <div className="bg-[#EFF6FF] border border-[#BFDBFE] rounded-[12px] p-5 text-center mb-6 shadow-sm">
+                                <h4 className="m-0 text-xs font-bold text-[#1E40AF] uppercase tracking-wider mb-1">
+                                    <i className="fas fa-paper-plane mr-1.5 text-[#2563EB]"></i> Readings & Proofs Submitted for Review
                                 </h4>
-                                <div className="text-xl font-bold text-[#1C1A17] my-1 font-['Outfit']">
+                                <div className="text-xl font-bold text-[#1E3A8A] my-1 font-['Outfit']">
                                     ✓ Submitted to Quality Review Queue
                                 </div>
-                                <div className="text-xs text-[#5C5852]">
+                                <div className="text-xs text-[#1E40AF]">
                                     All metrological test values, instrument parameters, and photo evidence recorded.
                                 </div>
                             </div>
                         ) : (
-                            <div className={`p-5 rounded-[13px] border text-center mb-6 shadow-[2px_2px_6px_#DBD3C3] ${
-                                overallPass ? 'bg-[#E2EBDC] border-[#C5DAC0]' : 'bg-[#F5DDDC] border-[#EBC3C2]'
+                            <div className={`p-5 rounded-[12px] border text-center mb-6 shadow-sm ${
+                                overallPass ? 'bg-[#DCFCE7] border-[#BBF7D0]' : 'bg-[#FEE2E2] border-[#FECACA]'
                             }`}>
-                                <h4 className="m-0 text-xs font-bold uppercase tracking-wider text-[#1C1A17] mb-1">
+                                <h4 className="m-0 text-xs font-bold uppercase tracking-wider text-[#0F172A] mb-1">
                                     Overall Metrological Assessment
                                 </h4>
-                                <div className={`text-2xl font-extrabold my-1 font-['Outfit'] ${overallPass ? 'text-[#2D5A27]' : 'text-[#8B2522]'}`}>
+                                <div className={`text-2xl font-extrabold my-1 font-['Outfit'] ${overallPass ? 'text-[#166534]' : 'text-[#991B1B]'}`}>
                                     {overallPass ? '✓ CONFORMS: PASS' : '❌ NON-CONFORMING: FAIL'}
                                 </div>
-                                <div className={`text-xs font-semibold ${overallPass ? 'text-[#2D5A27]' : 'text-[#8B2522]'}`}>
+                                <div className={`text-xs font-semibold ${overallPass ? 'text-[#166534]' : 'text-[#991B1B]'}`}>
                                     {passCount} of {totalTests} evaluation modules conforming
                                 </div>
                             </div>

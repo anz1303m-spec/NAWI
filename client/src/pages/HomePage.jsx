@@ -74,52 +74,52 @@ export default function HomePage() {
     const username = user?.name || user?.username || 'Verification Officer';
 
     return (
-        <div className="flex min-h-screen w-full bg-[#F4F0E8] font-['Plus_Jakarta_Sans'] text-[#1C1A17]">
+        <div className="flex min-h-screen w-full bg-[#F8FAFC] font-['Plus_Jakarta_Sans'] text-[#0F172A]">
             <Sidebar />
             <div className="flex-1 flex flex-col min-w-0 ml-[260px]">
                 <Header title="Verification Officer Workspace" />
                 <div className="p-7 md:p-8 flex-1">
                     {/* Welcome Banner */}
                     <div className="mb-6">
-                        <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-widest block mb-1">
+                        <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest block mb-1">
                             Legal Metrology Inspection Workspace
                         </span>
-                        <h1 className="text-2xl md:text-3xl font-bold text-[#1C1A17] mb-1 font-['Outfit'] uppercase tracking-tight">
+                        <h1 className="text-2xl md:text-3xl font-bold text-[#0F172A] mb-1 font-['Outfit'] uppercase tracking-tight">
                             Officer Overview: {username}
                         </h1>
-                        <p className="text-[#5C5852] text-xs">
+                        <p className="text-[#64748B] text-xs">
                             Active verification schedule, test plan progress, and calibration records
                         </p>
                     </div>
 
-                    {/* Stats Grid: Tactile Convex Raised Surfaces */}
+                    {/* Stats Grid */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-7">
-                        <div className="bg-[#F4F0E8] p-5 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                            <h2 className="text-3xl font-extrabold text-[#1C1A17] mb-0.5 font-['IBM_Plex_Mono']">{stats.total}</h2>
-                            <p className="text-[#5C5852] text-[10px] font-bold uppercase tracking-wider m-0">Total Evaluations</p>
+                        <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                            <h2 className="text-3xl font-extrabold text-[#0F172A] mb-0.5 font-['IBM_Plex_Mono']">{stats.total}</h2>
+                            <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">Total Evaluations</p>
                         </div>
-                        <div className="bg-[#F4F0E8] p-5 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                            <h2 className="text-3xl font-extrabold text-[#2D5A27] mb-0.5 font-['IBM_Plex_Mono']">{user?.role === 'tester' ? stats.total : stats.passed}</h2>
-                            <p className="text-[#5C5852] text-[10px] font-bold uppercase tracking-wider m-0">{user?.role === 'tester' ? 'Submitted' : 'Conforming'}</p>
+                        <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                            <h2 className="text-3xl font-extrabold text-[#166534] mb-0.5 font-['IBM_Plex_Mono']">{user?.role === 'tester' ? stats.total : stats.passed}</h2>
+                            <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">{user?.role === 'tester' ? 'Submitted' : 'Conforming'}</p>
                         </div>
-                        <div className="bg-[#F4F0E8] p-5 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                            <h2 className="text-3xl font-extrabold text-[#8C5815] mb-0.5 font-['IBM_Plex_Mono']">{pendingInfo ? 1 : 0}</h2>
-                            <p className="text-[#5C5852] text-[10px] font-bold uppercase tracking-wider m-0">Active Sessions</p>
+                        <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                            <h2 className="text-3xl font-extrabold text-[#2563EB] mb-0.5 font-['IBM_Plex_Mono']">{pendingInfo ? 1 : 0}</h2>
+                            <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">Active Sessions</p>
                         </div>
-                        <div className="bg-[#F4F0E8] p-5 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                            <h2 className="text-3xl font-extrabold text-[#8B2522] mb-0.5 font-['IBM_Plex_Mono']">{user?.role === 'tester' ? (reports.filter(r => ['REJECTED_BY_VIEWER', 'REJECTED_BY_ADMIN', 'SENT_BACK_TO_TESTER'].includes(r.workflow_status)).length) : stats.failed}</h2>
-                            <p className="text-[#5C5852] text-[10px] font-bold uppercase tracking-wider m-0">{user?.role === 'tester' ? 'Action Required' : 'Non-Conforming'}</p>
+                        <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                            <h2 className="text-3xl font-extrabold text-[#991B1B] mb-0.5 font-['IBM_Plex_Mono']">{user?.role === 'tester' ? (reports.filter(r => ['REJECTED_BY_VIEWER', 'REJECTED_BY_ADMIN', 'SENT_BACK_TO_TESTER'].includes(r.workflow_status)).length) : stats.failed}</h2>
+                            <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">{user?.role === 'tester' ? 'Action Required' : 'Non-Conforming'}</p>
                         </div>
                     </div>
 
-                    {/* Pending Session Banner: Concave Recessed Well */}
+                    {/* Pending Session Banner */}
                     {pendingInfo && (
-                        <div className="bg-[#EAE4D6] border border-[#DED7C8] rounded-[13px] p-5 mb-7 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[inset_2px_2px_5px_#DBD3C3,inset_-2px_-2px_5px_#FFFFFF]">
+                        <div className="bg-[#EFF6FF] border border-[#BFDBFE] rounded-[14px] p-5 mb-7 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
                             <div>
-                                <h4 className="text-[#1C1A17] font-bold text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                                    <i className="fas fa-clock text-[#8C5815]"></i> Active Inspection In Progress
+                                <h4 className="text-[#1E40AF] font-bold text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
+                                    <i className="fas fa-clock text-[#2563EB]"></i> Active Inspection In Progress
                                 </h4>
-                                <p className="text-[#1C1A17] text-xs m-0">
+                                <p className="text-[#1E3A8A] text-xs m-0">
                                     <strong>{pendingInfo.name}</strong> (Status: {pendingInfo.remainingText})
                                 </p>
                             </div>
@@ -135,26 +135,26 @@ export default function HomePage() {
                     {/* Content Panels Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Recent Tests Panel */}
-                        <div className="bg-[#F4F0E8] p-6 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                            <div className="flex justify-between items-center pb-3 border-b border-[#DED7C8] mb-4">
-                                <h3 className="text-sm font-bold text-[#1C1A17] m-0 font-['Outfit'] uppercase tracking-wider">
+                        <div className="bg-white p-6 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                            <div className="flex justify-between items-center pb-3 border-b border-[#E2E8F0] mb-4">
+                                <h3 className="text-sm font-bold text-[#0F172A] m-0 font-['Outfit'] uppercase tracking-wider">
                                     Recent Inspections
                                 </h3>
-                                <Link to="/history" className="text-[11px] font-bold text-[#1C1A17] hover:underline no-underline">
+                                <Link to="/history" className="text-[11px] font-bold text-[#2563EB] hover:underline no-underline">
                                     View All &rarr;
                                 </Link>
                             </div>
                             {recentTests.length > 0 ? (
-                                <ul className="divide-y divide-[#DED7C8]/60 list-none p-0 m-0">
+                                <ul className="divide-y divide-[#F1F5F9] list-none p-0 m-0">
                                     {recentTests.map((t, i) => (
                                         <li 
                                             key={i} 
                                             onClick={() => navigate(`/report/${t.fullId}`)} 
-                                            className="flex items-center justify-between py-2.5 hover:bg-[#EAE4D6]/50 px-2 rounded-[11px] transition-colors cursor-pointer"
+                                            className="flex items-center justify-between py-2.5 hover:bg-[#F8FAFC] px-2 rounded-[10px] transition-colors cursor-pointer"
                                         >
                                             <div>
-                                                <strong className="text-[#1C1A17] text-xs">{t.name}</strong>
-                                                <span className="text-[#7A7469] text-[11px] font-mono ml-2">({t.id})</span>
+                                                <strong className="text-[#0F172A] text-xs">{t.name}</strong>
+                                                <span className="text-[#94A3B8] text-[11px] font-mono ml-2">({t.id})</span>
                                             </div>
                                             <span className={`status-badge ${
                                                 user?.role === 'tester'
@@ -169,13 +169,13 @@ export default function HomePage() {
                                     ))}
                                 </ul>
                             ) : (
-                                <p className="text-[#7A7469] text-center py-6 text-xs m-0">No tests registered yet.</p>
+                                <p className="text-[#94A3B8] text-center py-6 text-xs m-0">No tests registered yet.</p>
                             )}
                         </div>
 
                         {/* Quick Actions Panel */}
-                        <div className="bg-[#F4F0E8] p-6 rounded-[13px] border border-[#DED7C8] shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]">
-                            <h3 className="text-sm font-bold text-[#1C1A17] pb-3 border-b border-[#DED7C8] mb-4 font-['Outfit'] uppercase tracking-wider">
+                        <div className="bg-white p-6 rounded-[14px] border border-[#E2E8F0] shadow-sm">
+                            <h3 className="text-sm font-bold text-[#0F172A] pb-3 border-b border-[#E2E8F0] mb-4 font-['Outfit'] uppercase tracking-wider">
                                 Metrological Procedures
                             </h3>
                             <div className="flex flex-col gap-3">
@@ -187,15 +187,15 @@ export default function HomePage() {
                                 </Link>
                                 <Link 
                                     to="/test-plan" 
-                                    className="bg-[#EAE4D6] hover:bg-[#DED7C8] text-[#1C1A17] px-4 py-3 rounded-[13px] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-3 no-underline border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3]"
+                                    className="bg-[#F8FAFC] hover:bg-[#F1F5F9] text-[#0F172A] px-4 py-3 rounded-[12px] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-3 no-underline border border-[#E2E8F0] shadow-sm"
                                 >
-                                    <i className="fas fa-tasks"></i> Dynamic Test Planner & Load Generator
+                                    <i className="fas fa-tasks text-[#64748B]"></i> Dynamic Test Planner & Load Generator
                                 </Link>
                                 <Link 
                                     to="/history" 
-                                    className="bg-[#EAE4D6] hover:bg-[#DED7C8] text-[#1C1A17] px-4 py-3 rounded-[13px] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-3 no-underline border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3]"
+                                    className="bg-[#F8FAFC] hover:bg-[#F1F5F9] text-[#0F172A] px-4 py-3 rounded-[12px] font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-3 no-underline border border-[#E2E8F0] shadow-sm"
                                 >
-                                    <i className="fas fa-folder-open"></i> Inspection Archive & Retest Queue
+                                    <i className="fas fa-folder-open text-[#64748B]"></i> Inspection Archive & Retest Queue
                                 </Link>
                             </div>
                         </div>
