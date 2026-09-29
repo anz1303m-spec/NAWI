@@ -40,7 +40,7 @@ const ReportSchema = new mongoose.Schema({
     
     // Cryptographic Seal & Status
     sha256_hash:             String,
-    report_status:           { type: String, enum: ["ISSUED", "SUPERSEDED"], default: "ISSUED" },
+    report_status:           { type: String, enum: ["PENDING", "ISSUED", "SUPERSEDED"], default: "PENDING" },
     workflow_status:         { 
         type: String, 
         enum: ["SUBMITTED", "RESUBMITTED", "UNDER_VIEWER_REVIEW", "PENDING_ADMIN_APPROVAL", "REJECTED_BY_VIEWER", "REJECTED_BY_ADMIN", "APPROVED", "CERTIFIED", "SENT_BACK_TO_TESTER", "ISSUED"], 

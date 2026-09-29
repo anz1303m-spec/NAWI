@@ -67,7 +67,7 @@ const saveReport = async (req, res) => {
             rule_set_version,
             createdBy: req.username || "Nishant",
             workflow_status: "SUBMITTED",
-            report_status: "ISSUED"
+            report_status: "PENDING"
         });
 
         // Compute SHA-256 seal for tamper verification
