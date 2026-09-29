@@ -388,26 +388,27 @@ export default function AdminDashboardPage() {
                                     <p style={{ color: '#5C5852', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Official Certificates Issued</p>
                                 </div>
 
-                                <div className="form-card" style={{ padding: '20px', margin: 0, borderLeft: '4px solid #1C1A17', borderTop: '1px solid #DED7C8', borderRight: '1px solid #DED7C8', borderBottom: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF' }}>
-                                    <h2 style={{ fontSize: '2rem', color: '#1C1A17', margin: 0, padding: 0, border: 'none', fontFamily: 'IBM Plex Mono, monospace' }}>{stats.users}</h2>
-                                    <p style={{ color: '#5C5852', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Active System Officers</p>
+                                <div className="form-card" style={{ padding: '20px', margin: 0, borderLeft: '4px solid #0F172A', borderTop: '1px solid #E2E8F0', borderRight: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0', background: '#FFFFFF', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+                                    <h2 style={{ fontSize: '2rem', color: '#0F172A', margin: 0, padding: 0, border: 'none', fontFamily: 'IBM Plex Mono, monospace' }}>{stats.users}</h2>
+                                    <p style={{ color: '#64748B', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Active System Officers</p>
                                 </div>
                             </div>
 
-                            <div className="table-card" style={{ background: '#F4F0E8', border: '1px solid #DED7C8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF', overflow: 'hidden' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: '#EAE4D6', borderBottom: '1px solid #DED7C8' }}>
-                                    <span style={{ fontWeight: 700, color: '#1C1A17', fontSize: '1.05rem', fontFamily: 'Outfit, sans-serif' }}>All Verification Reports</span>
+                            <div className="table-card bg-white" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: '#F8FAFC', borderBottom: '1px solid #E2E8F0', flexWrap: 'wrap', gap: '8px' }}>
+                                    <span style={{ fontWeight: 700, color: '#0F172A', fontSize: '1.05rem', fontFamily: 'Outfit, sans-serif' }}>All Verification Reports</span>
                                     <button 
                                         className="btn" 
-                                        style={{ fontSize: '0.8rem', padding: '6px 14px', background: '#1C1A17', color: '#F4F0E8', border: 'none', borderRadius: '13px', cursor: 'pointer' }}
+                                        style={{ fontSize: '0.8rem', padding: '6px 14px', background: '#2563EB', color: '#FFFFFF', border: 'none', borderRadius: '13px', cursor: 'pointer' }}
                                         onClick={() => setActiveTab('applications')}
                                     >
                                         Go to Application Reviews Queue &rarr;
                                     </button>
                                 </div>
-                                <table>
-                                    <thead>
-                                        <tr style={{ background: '#EAE4D6', borderBottom: '1px solid #DED7C8' }}>
+                                <div className="table-responsive-wrapper">
+                                    <table>
+                                        <thead>
+                                            <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0' }}>
                                             <th style={{ color: '#1C1A17', fontWeight: 700 }}>Test ID</th>
                                             <th style={{ color: '#1C1A17', fontWeight: 700 }}>Instrument</th>
                                             <th style={{ color: '#1C1A17', fontWeight: 700 }}>Inspector</th>
@@ -459,6 +460,7 @@ export default function AdminDashboardPage() {
                                 </table>
                             </div>
                         </div>
+                    </div>
                     )}
 
                     {/* TAB 2: APPLICATION REVIEW SECTION (ADMIN PANEL) */}

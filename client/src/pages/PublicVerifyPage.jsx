@@ -57,41 +57,41 @@ export default function PublicVerifyPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#F4F0E8] flex flex-col text-[#1C1A17]">
+        <div className="min-h-screen bg-[#F8FAFC] flex flex-col text-[#0F172A]">
             <Navbar />
 
             <div className="flex-1 flex flex-col items-center justify-center px-4 py-10 font-['Plus_Jakarta_Sans']">
                 {/* Header / Brand */}
                 <div className="text-center mb-6">
-                    <div className="w-12 h-12 bg-[#1C1A17] text-[#F4F0E8] rounded-[13px] grid place-items-center text-xl mx-auto mb-3 shadow-[3px_3px_8px_#DBD3C3,-3px_-3px_8px_#FFFFFF]">
+                    <div className="w-12 h-12 bg-[#2563EB] text-white rounded-[13px] grid place-items-center text-xl mx-auto mb-3 shadow-md">
                         <i className="fas fa-balance-scale-right"></i>
                     </div>
-                    <h1 className="text-xl md:text-2xl text-[#1C1A17] m-0 font-['Outfit'] font-bold uppercase tracking-tight">
+                    <h1 className="text-xl md:text-2xl text-[#0F172A] m-0 font-['Outfit'] font-bold uppercase tracking-tight">
                         Public Metrology Verification
                     </h1>
-                    <p className="text-xs text-[#5C5852] mt-1 mb-0">
+                    <p className="text-xs text-[#64748B] mt-1 mb-0">
                         Cryptographic Seal & OIML R 76-1 Conformity Register
                     </p>
                 </div>
 
-                {/* Main Content Card: Tactile Convex Surface */}
-                <div className="bg-[#F4F0E8] rounded-[14px] border border-[#DED7C8] shadow-[6px_6px_18px_#DBD3C3,-6px_-6px_18px_#FFFFFF] max-w-xl w-full p-6 md:p-8">
+                {/* Main Content Card */}
+                <div className="bg-[#FFFFFF] rounded-[14px] border border-[#E2E8F0] shadow-md max-w-xl w-full p-6 md:p-8">
                     {/* Interactive Certificate ID Search Bar */}
                     <form onSubmit={handleSearch} className="mb-6">
-                        <label className="block text-[11px] font-bold text-[#1C1A17] uppercase tracking-wider mb-2">
+                        <label className="block text-[11px] font-bold text-[#0F172A] uppercase tracking-wider mb-2">
                             Enter Certificate or Report ID
                         </label>
-                        <div className="flex gap-2.5">
+                        <div className="flex flex-col sm:flex-row gap-2.5">
                             <input
                                 type="text"
                                 placeholder="e.g. TP-1024 or full report ID..."
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
-                                className="flex-1 px-3.5 py-2.5 bg-[#EAE4D6] border border-[#DED7C8] rounded-[13px] text-xs font-mono text-[#1C1A17] shadow-[inset_2px_2px_4px_#DBD3C3,inset_-2px_-2px_4px_#FFFFFF] focus:border-[#1C1A17] outline-none"
+                                className="flex-1 px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] text-xs font-mono text-[#0F172A] focus:border-[#2563EB] outline-none"
                             />
                             <button
                                 type="submit"
-                                className="btn px-5 py-2.5 text-xs font-bold whitespace-nowrap"
+                                className="btn px-5 py-2.5 text-xs font-bold whitespace-nowrap w-full sm:w-auto"
                             >
                                 <i className="fas fa-shield-alt"></i> Verify
                             </button>
@@ -101,22 +101,22 @@ export default function PublicVerifyPage() {
                     {/* Conditional Verification States */}
                     {loading ? (
                         <div className="py-4">
-                            <p className="text-center text-xs text-[#5C5852] mb-4">
-                                <i className="fas fa-circle-notch fa-spin mr-2 text-[#1C1A17]"></i>
+                            <p className="text-center text-xs text-[#64748B] mb-4">
+                                <i className="fas fa-circle-notch fa-spin mr-2 text-[#2563EB]"></i>
                                 Validating cryptographic SHA-256 seal against metrology ledger...
                             </p>
                             <SkeletonReportPage />
                         </div>
                     ) : !activeId ? (
                         /* IDLE INITIAL SEARCH STATE */
-                        <div className="text-center py-7 px-4 bg-[#EAE4D6] rounded-[13px] border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3]">
-                            <div className="text-3xl text-[#1C1A17] mb-2">
+                        <div className="text-center py-7 px-4 bg-[#F8FAFC] rounded-[13px] border border-[#E2E8F0]">
+                            <div className="text-3xl text-[#2563EB] mb-2">
                                 <i className="fas fa-qrcode"></i>
                             </div>
-                            <h3 className="text-sm text-[#1C1A17] font-bold mb-1 font-['Outfit'] uppercase">
+                            <h3 className="text-sm text-[#0F172A] font-bold mb-1 font-['Outfit'] uppercase">
                                 Public Verification Portal
                             </h3>
-                            <p className="text-xs text-[#5C5852] leading-relaxed max-w-md mx-auto m-0">
+                            <p className="text-xs text-[#64748B] leading-relaxed max-w-md mx-auto m-0">
                                 Enter an official certificate ID above or scan the QR code printed on the physical certificate to query its mathematical seal and test observations.
                             </p>
                         </div>

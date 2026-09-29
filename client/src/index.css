@@ -506,9 +506,27 @@ tbody tr:hover {
     background-color: var(--bg-base);
 }
 
+@media (max-width: 767px) {
+    .app-main {
+        margin-left: 0 !important;
+    }
+}
+
 .app-content {
     padding: 28px 32px;
     flex: 1;
+}
+
+@media (max-width: 767px) {
+    .app-content {
+        padding: 16px 16px;
+    }
+}
+
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Sidebar Tactile Styling */

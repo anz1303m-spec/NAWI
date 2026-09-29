@@ -22,7 +22,7 @@ function ProtectedRoute({ children, adminOnly = false }) {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#F4F0E8] p-8">
+            <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8">
                 <SkeletonDashboard />
             </div>
         );
@@ -44,7 +44,7 @@ export default function App() {
         <AuthProvider>
             <Router>
                 <Suspense fallback={
-                    <div className="min-h-screen bg-[#F4F0E8] p-8">
+                    <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8">
                         <SkeletonDashboard />
                     </div>
                 }>

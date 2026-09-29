@@ -249,7 +249,7 @@ export default function ViewerDashboardPage() {
                                 <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     System Testers / Labs
                                 </div>
-                                <div style={{ fontSize: '1.5rem', fontWeight 700, color: '#0F172A', fontFamily: 'IBM Plex Mono, monospace' }}>
+                                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0F172A', fontFamily: 'IBM Plex Mono, monospace' }}>
                                     {statsLoading ? '...' : stats.labsCount}
                                 </div>
                             </div>
@@ -269,29 +269,29 @@ export default function ViewerDashboardPage() {
                             </div>
                         </div>
 
-                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '4px solid #1C1A17', borderTop: '1px solid #DED7C8', borderRight: '1px solid #DED7C8', borderBottom: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF', marginBottom: 0 }}>
-                            <div style={{ width: '46px', height: '46px', borderRadius: '11px', background: '#EAE4D6', color: '#1C1A17', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #DED7C8', boxShadow: 'inset 1px 1px 3px #DBD3C3' }}>
+                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '4px solid #0F172A', borderTop: '1px solid #E2E8F0', borderRight: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0', background: '#FFFFFF', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)', marginBottom: 0 }}>
+                            <div style={{ width: '46px', height: '46px', borderRadius: '11px', background: '#F1F5F9', color: '#0F172A', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #E2E8F0' }}>
                                 <i className="fas fa-paper-plane"></i>
                             </div>
                             <div>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#5C5852', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Awaiting Admin Sign-off
                                 </div>
-                                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1C1A17', fontFamily: 'IBM Plex Mono, monospace' }}>
+                                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0F172A', fontFamily: 'IBM Plex Mono, monospace' }}>
                                     {statsLoading ? '...' : stats.sentForApprovalCount}
                                 </div>
                             </div>
                         </div>
 
-                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '4px solid #2D5A27', borderTop: '1px solid #DED7C8', borderRight: '1px solid #DED7C8', borderBottom: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF', marginBottom: 0 }}>
-                            <div style={{ width: '46px', height: '46px', borderRadius: '11px', background: '#E2EBDC', color: '#2D5A27', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #C5DAC0' }}>
+                        <div className="form-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '4px solid #166534', borderTop: '1px solid #E2E8F0', borderRight: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0', background: '#FFFFFF', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)', marginBottom: 0 }}>
+                            <div style={{ width: '46px', height: '46px', borderRadius: '11px', background: '#DCFCE7', color: '#166534', display: 'grid', placeItems: 'center', fontSize: '1.2rem', border: '1px solid #BBF7D0' }}>
                                 <i className="fas fa-certificate"></i>
                             </div>
                             <div>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#5C5852', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                     Certificates Issued
                                 </div>
-                                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#2D5A27', fontFamily: 'IBM Plex Mono, monospace' }}>
+                                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#166534', fontFamily: 'IBM Plex Mono, monospace' }}>
                                     {statsLoading ? '...' : stats.certificatesIssuedCount}
                                 </div>
                             </div>
@@ -299,8 +299,8 @@ export default function ViewerDashboardPage() {
                     </div>
 
                     {/* Status Tracking Tabs & Search / Filter Card */}
-                    <div className="form-card" style={{ marginBottom: '24px', padding: '20px', background: '#F4F0E8', border: '1px solid #DED7C8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF' }}>
-                        <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid #DED7C8', paddingBottom: '14px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                    <div className="form-card" style={{ marginBottom: '24px', padding: '20px', background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+                        <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid #E2E8F0', paddingBottom: '14px', marginBottom: '16px', flexWrap: 'wrap' }}>
                             <button
                                 onClick={() => setActiveTab('pending')}
                                 style={{
@@ -308,12 +308,11 @@ export default function ViewerDashboardPage() {
                                     fontWeight: 700,
                                     fontSize: '0.88rem',
                                     fontFamily: 'Plus Jakarta Sans, sans-serif',
-                                    border: activeTab === 'pending' ? '1px solid #1C1A17' : '1px solid #DED7C8',
+                                    border: activeTab === 'pending' ? '1px solid #2563EB' : '1px solid #E2E8F0',
                                     borderRadius: '13px',
                                     cursor: 'pointer',
-                                    background: activeTab === 'pending' ? '#1C1A17' : '#EAE4D6',
-                                    color: activeTab === 'pending' ? '#F4F0E8' : '#5C5852',
-                                    boxShadow: activeTab === 'pending' ? 'none' : 'inset 1px 1px 2px #DBD3C3',
+                                    background: activeTab === 'pending' ? '#2563EB' : '#FFFFFF',
+                                    color: activeTab === 'pending' ? '#FFFFFF' : '#475569',
                                     transition: 'all 0.2s'
                                 }}
                             >
@@ -328,12 +327,11 @@ export default function ViewerDashboardPage() {
                                     fontWeight: 700,
                                     fontSize: '0.88rem',
                                     fontFamily: 'Plus Jakarta Sans, sans-serif',
-                                    border: activeTab === 'sent' ? '1px solid #1C1A17' : '1px solid #DED7C8',
+                                    border: activeTab === 'sent' ? '1px solid #2563EB' : '1px solid #E2E8F0',
                                     borderRadius: '13px',
                                     cursor: 'pointer',
-                                    background: activeTab === 'sent' ? '#1C1A17' : '#EAE4D6',
-                                    color: activeTab === 'sent' ? '#F4F0E8' : '#5C5852',
-                                    boxShadow: activeTab === 'sent' ? 'none' : 'inset 1px 1px 2px #DBD3C3',
+                                    background: activeTab === 'sent' ? '#2563EB' : '#FFFFFF',
+                                    color: activeTab === 'sent' ? '#FFFFFF' : '#475569',
                                     transition: 'all 0.2s'
                                 }}
                             >
@@ -348,12 +346,11 @@ export default function ViewerDashboardPage() {
                                     fontWeight: 700,
                                     fontSize: '0.88rem',
                                     fontFamily: 'Plus Jakarta Sans, sans-serif',
-                                    border: activeTab === 'rejected' ? '1px solid #1C1A17' : '1px solid #DED7C8',
+                                    border: activeTab === 'rejected' ? '1px solid #991B1B' : '1px solid #E2E8F0',
                                     borderRadius: '13px',
                                     cursor: 'pointer',
-                                    background: activeTab === 'rejected' ? '#1C1A17' : '#EAE4D6',
-                                    color: activeTab === 'rejected' ? '#F4F0E8' : '#5C5852',
-                                    boxShadow: activeTab === 'rejected' ? 'none' : 'inset 1px 1px 2px #DBD3C3',
+                                    background: activeTab === 'rejected' ? '#991B1B' : '#FFFFFF',
+                                    color: activeTab === 'rejected' ? '#FFFFFF' : '#475569',
                                     transition: 'all 0.2s'
                                 }}
                             >
@@ -397,22 +394,23 @@ export default function ViewerDashboardPage() {
                     </div>
 
                     {/* Pending Review Queue Table */}
-                    <div className="table-card" style={{ background: '#F4F0E8', border: '1px solid #DED7C8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF', overflow: 'hidden' }}>
+                    <div className="table-card bg-white" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
                         {loading ? (
                             <SkeletonTable rows={5} cols={7} />
                         ) : filteredReports.length > 0 ? (
-                            <table>
-                                <thead>
-                                    <tr style={{ background: '#EAE4D6', borderBottom: '1px solid #DED7C8' }}>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Test ID</th>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Instrument</th>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Tester Name</th>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Date Submitted</th>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Accuracy Class</th>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Workflow Status</th>
-                                        <th style={{ color: '#1C1A17', fontWeight: 700 }}>Action</th>
-                                    </tr>
-                                </thead>
+                            <div className="table-responsive-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0' }}>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Test ID</th>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Instrument</th>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Tester Name</th>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Date Submitted</th>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Accuracy Class</th>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Workflow Status</th>
+                                            <th style={{ color: '#0F172A', fontWeight: 700 }}>Action</th>
+                                        </tr>
+                                    </thead>
                                 <tbody>
                                     {filteredReports.map((r) => {
                                         const dateObj = new Date(r.createdAt);
@@ -489,6 +487,7 @@ export default function ViewerDashboardPage() {
                                     })}
                                 </tbody>
                             </table>
+                        </div>
                         ) : (
                             <p style={{ textAlign: 'center', padding: '32px', color: '#5C5852', margin: 0 }}>
                                 No reports match the selected criteria.

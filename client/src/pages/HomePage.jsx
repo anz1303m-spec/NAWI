@@ -76,9 +76,9 @@ export default function HomePage() {
     return (
         <div className="flex min-h-screen w-full bg-[#F8FAFC] font-['Plus_Jakarta_Sans'] text-[#0F172A]">
             <Sidebar />
-            <div className="flex-1 flex flex-col min-w-0 ml-[260px]">
+            <div className="flex-1 flex flex-col min-w-0 md:ml-[260px] ml-0">
                 <Header title="Verification Officer Workspace" />
-                <div className="p-7 md:p-8 flex-1">
+                <div className="p-4 sm:p-6 md:p-8 flex-1">
                     {/* Welcome Banner */}
                     <div className="mb-6">
                         <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest block mb-1">

@@ -232,27 +232,27 @@ export default function NewTestPage() {
 
                     {/* Page Header */}
                     <div className="mb-6">
-                        <span className="text-[10px] font-bold text-[#7A7469] uppercase tracking-widest block mb-1">
+                        <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest block mb-1">
                             OIML R 76-1 Metrological Intake
                         </span>
-                        <h2 className="text-xl md:text-2xl font-['Outfit'] font-bold text-[#1C1A17] uppercase tracking-tight m-0">
+                        <h2 className="text-xl md:text-2xl font-['Outfit'] font-bold text-[#0F172A] uppercase tracking-tight m-0">
                             Automatic Test Planner Setup
                         </h2>
-                        <p className="text-xs text-[#5C5852] mt-1 mb-4">
+                        <p className="text-xs text-[#64748B] mt-1 mb-4">
                             Configure instrument parameters and upload required administrative evidence for automated evaluation.
                         </p>
 
-                        <div className="p-3.5 bg-[#EAE4D6] border border-[#DED7C8] rounded-[13px] shadow-[inset_1px_1px_3px_#DBD3C3]">
+                        <div className="p-3.5 bg-[#FFFFFF] border border-[#E2E8F0] rounded-[13px] shadow-xs">
                             <div className="flex items-center justify-between flex-wrap gap-2">
                                 <div className="flex items-center gap-2.5">
-                                    <span className="bg-[#E2EBDC] text-[#2D5A27] border border-[#C5DAC0] text-[10px] font-bold px-2.5 py-0.5 rounded-[11px] uppercase tracking-wider">
+                                    <span className="bg-[#DCFCE7] text-[#166534] border border-[#BBF7D0] text-[10px] font-bold px-2.5 py-0.5 rounded-[11px] uppercase tracking-wider">
                                         Active Governing Ruleset
                                     </span>
-                                    <span className="font-bold text-[#1C1A17] text-xs font-['Outfit']">
+                                    <span className="font-bold text-[#0F172A] text-xs font-['Outfit']">
                                         {activeRule}
                                     </span>
                                 </div>
-                                <span className="text-[11px] text-[#5C5852] font-semibold">
+                                <span className="text-[11px] text-[#64748B] font-semibold">
                                     OIML R-76-1:2006 (E) Metrological Tolerance Engine
                                 </span>
                             </div>
@@ -337,17 +337,17 @@ export default function NewTestPage() {
                             </div>
 
                             {/* Section 2: Instrument & Administrative Evidence Uploads */}
-                            <div className="mt-7 p-5 bg-[#EAE4D6] border border-[#DED7C8] rounded-[13px] shadow-[inset_1px_1px_3px_#DBD3C3]">
+                            <div className="mt-7 p-4 sm:p-5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] shadow-xs">
                                 <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
                                     <div>
-                                        <h4 className="m-0 text-[#1C1A17] text-xs font-bold uppercase tracking-wider font-['Outfit'] flex items-center gap-2">
-                                            <i className="fas fa-camera-retro text-[#1C1A17]"></i> 2. Instrument & Administrative Evidence Uploads
+                                        <h4 className="m-0 text-[#0F172A] text-xs font-bold uppercase tracking-wider font-['Outfit'] flex items-center gap-2">
+                                            <i className="fas fa-camera-retro text-[#2563EB]"></i> 2. Instrument & Administrative Evidence Uploads
                                         </h4>
-                                        <p className="m-0 text-[11px] text-[#5C5852] mt-0.5">
+                                        <p className="m-0 text-[11px] text-[#64748B] mt-0.5">
                                             Attach verified photographs and technical compliance documents required for certification trail.
                                         </p>
                                     </div>
-                                    <span className="bg-[#F4F0E8] text-[#1C1A17] border border-[#DED7C8] px-2.5 py-1 rounded-[11px] text-[10px] font-bold uppercase tracking-wider">
+                                    <span className="bg-[#FFFFFF] text-[#0F172A] border border-[#E2E8F0] px-2.5 py-1 rounded-[11px] text-[10px] font-bold uppercase tracking-wider">
                                         OIML R-76 §A.3 Evidence Vault
                                     </span>
                                 </div>
@@ -355,9 +355,9 @@ export default function NewTestPage() {
                                 {/* Photographed Evidence Upload Cards */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
                                     {/* Front View */}
-                                    <div className="bg-[#F4F0E8] border border-[#DED7C8] rounded-[13px] p-3.5 shadow-[2px_2px_6px_#DBD3C3]">
-                                        <div className="text-xs font-bold text-[#1C1A17] mb-2 flex justify-between">
-                                            <span>Front View Photo <span className="text-[#8B2522]">*</span></span>
+                                    <div className="bg-[#FFFFFF] border border-[#E2E8F0] rounded-[13px] p-3.5 shadow-xs">
+                                        <div className="text-xs font-bold text-[#0F172A] mb-2 flex justify-between">
+                                            <span>Front View Photo <span className="text-[#991B1B]">*</span></span>
                                             {previews.photo_front && (
                                                 <button type="button" onClick={() => removePhoto('photo_front')} className="text-[#8B2522] hover:underline text-[10px] bg-transparent border-0 cursor-pointer">
                                                     Remove

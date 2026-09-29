@@ -22,13 +22,13 @@ export default function CertificatePage() {
     }, [id]);
 
     if (loading) return (
-        <div className="max-w-4xl mx-auto my-10 p-6 bg-[#F4F0E8]">
+        <div className="max-w-4xl mx-auto my-10 p-6 bg-[#F8FAFC]">
             <SkeletonReportPage />
         </div>
     );
 
     if (!report) return (
-        <div className="min-h-screen bg-[#F4F0E8] flex items-center justify-center p-6 text-center text-[#8B2522] font-bold">
+        <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 text-center text-[#991B1B] font-bold">
             Verification Certificate Not Found
         </div>
     );
@@ -37,19 +37,19 @@ export default function CertificatePage() {
 
     if (!isCertified && user?.role !== 'admin') {
         return (
-            <div className="min-h-screen bg-[#F4F0E8] p-6 flex justify-center items-center font-['Plus_Jakarta_Sans'] text-[#1C1A17]">
-                <div className="bg-[#F4F0E8] border border-[#DED7C8] rounded-[14px] p-8 max-w-lg w-full text-center shadow-[6px_6px_18px_#DBD3C3,-6px_-6px_18px_#FFFFFF]">
-                    <div className="w-14 h-14 bg-[#EAE4D6] border border-[#DED7C8] text-[#8C5815] rounded-[13px] grid place-items-center text-2xl mx-auto mb-4 shadow-[inset_1px_1px_3px_#DBD3C3]">
+            <div className="min-h-screen bg-[#F8FAFC] p-6 flex justify-center items-center font-['Plus_Jakarta_Sans'] text-[#0F172A]">
+                <div className="bg-[#FFFFFF] border border-[#E2E8F0] rounded-[14px] p-8 max-w-lg w-full text-center shadow-md">
+                    <div className="w-14 h-14 bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E] rounded-[13px] grid place-items-center text-2xl mx-auto mb-4">
                         <i className="fas fa-hourglass-half"></i>
                     </div>
-                    <h2 className="text-lg font-bold text-[#1C1A17] mb-2 font-['Outfit'] uppercase">
+                    <h2 className="text-lg font-bold text-[#0F172A] mb-2 font-['Outfit'] uppercase">
                         Certificate Pending Final Administrative Approval
                     </h2>
-                    <p className="text-xs text-[#5C5852] leading-relaxed mb-5">
+                    <p className="text-xs text-[#64748B] leading-relaxed mb-5">
                         Verification record (<strong>TP-{id.substring(0, 8).toUpperCase()}</strong>) is undergoing official quality review. Once approved and sealed by the Administrator Authority, the official certificate will be released.
                     </p>
-                    <div className="bg-[#EAE4D6] border border-[#DED7C8] p-3 rounded-[13px] text-xs font-semibold text-[#1C1A17] mb-6 shadow-[inset_1px_1px_3px_#DBD3C3]">
-                        Current Workflow Stage: <strong className="text-[#1C1A17]">{report.workflow_status || 'SUBMITTED'}</strong>
+                    <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-3 rounded-[13px] text-xs font-semibold text-[#0F172A] mb-6">
+                        Current Workflow Stage: <strong className="text-[#0F172A]">{report.workflow_status || 'SUBMITTED'}</strong>
                     </div>
                     <div className="flex gap-3 justify-center">
                         <Link to={`/report/${id}`} className="btn px-4 py-2.5 text-xs font-bold">
@@ -98,45 +98,45 @@ export default function CertificatePage() {
     const certUrl = `${window.location.origin}/verify/${report._id}`;
 
     return (
-        <div className="min-h-screen bg-[#F4F0E8] p-6 flex flex-col items-center">
+        <div className="min-h-screen bg-[#F8FAFC] p-4 sm:p-6 flex flex-col items-center">
             {/* Screen Print Button */}
             <button
                 onClick={() => window.print()}
-                className="btn fixed top-5 right-5 z-[1000] px-5 py-3 text-xs tracking-wider uppercase font-bold shadow-[4px_4px_10px_#DBD3C3,-4px_-4px_10px_#FFFFFF]"
+                className="btn fixed top-5 right-5 z-[1000] px-5 py-3 text-xs tracking-wider uppercase font-bold shadow-md"
             >
                 <i className="fas fa-print"></i> Print Verification Certificate
             </button>
 
             {/* A4 Sheet Container */}
-            <div className="w-[210mm] min-h-[297mm] bg-[#FAF8F5] shadow-[6px_6px_24px_#DBD3C3] relative box-border text-[#1C1A17] p-[20mm_16mm_16mm] border border-[#DED7C8]">
+            <div className="max-w-full w-[210mm] min-h-[297mm] bg-[#FFFFFF] shadow-lg relative box-border text-[#0F172A] p-6 sm:p-[20mm_16mm_16mm] border border-[#E2E8F0]">
                 {/* Frame border */}
-                <div className="absolute inset-[8mm] border-2 border-[#1C1A17] pointer-events-none">
-                    <div className="absolute inset-[4px] border border-[#DED7C8]"></div>
+                <div className="absolute inset-[8mm] border-2 border-[#0F172A] pointer-events-none hidden sm:block">
+                    <div className="absolute inset-[4px] border border-[#E2E8F0]"></div>
                 </div>
 
                 {/* Watermark */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-[32deg] font-['Outfit'] text-[72px] font-bold text-[#1C1A17]/[0.03] tracking-[6px] whitespace-nowrap pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-[32deg] font-['Outfit'] text-[42px] sm:text-[72px] font-bold text-[#0F172A]/[0.03] tracking-[6px] whitespace-nowrap pointer-events-none">
                     VERIFIED OIML R-76
                 </div>
 
                 {/* Header */}
-                <div className="flex justify-between items-center border-b-2 border-[#1C1A17] pb-3.5 mb-4">
+                <div className="flex justify-between items-center border-b-2 border-[#0F172A] pb-3.5 mb-4">
                     <div className="flex items-center gap-3.5">
-                        <div className="w-12 h-12 rounded-[13px] bg-[#1C1A17] grid place-items-center text-[#F4F0E8] text-xl shadow-[2px_2px_6px_#DBD3C3]">
+                        <div className="w-12 h-12 rounded-[13px] bg-[#0F172A] grid place-items-center text-[#FFFFFF] text-xl shadow-xs">
                             <i className="fas fa-balance-scale-right"></i>
                         </div>
                         <div>
-                            <div className="text-[10px] uppercase tracking-widest text-[#7A7469] font-bold">
+                            <div className="text-[10px] uppercase tracking-widest text-[#64748B] font-bold">
                                 National Legal Metrology Authority
                             </div>
-                            <h1 className="text-xl font-bold text-[#1C1A17] font-['Outfit'] uppercase tracking-tight m-0">
+                            <h1 className="text-xl font-bold text-[#0F172A] font-['Outfit'] uppercase tracking-tight m-0">
                                 Verification Certificate
                             </h1>
-                            <div className="text-[11px] text-[#5C5852] font-semibold">OIML R-76-1:2006 (E) Compliance Assessment</div>
+                            <div className="text-[11px] text-[#64748B] font-semibold">OIML R-76-1:2006 (E) Compliance Assessment</div>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2.5 bg-[#EAE4D6] p-2 rounded-[13px] border border-[#DED7C8] shadow-[inset_1px_1px_3px_#DBD3C3]">
+                    <div className="flex items-center gap-2.5 bg-[#F8FAFC] p-2 rounded-[13px] border border-[#E2E8F0]">
                         <QRCodeSVG value={certUrl} size={52} />
                         <div className="text-[9px] leading-tight">
                             <div className="font-bold text-[#1C1A17] text-[11px] font-mono">{reportIdStr}</div>

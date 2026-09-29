@@ -113,9 +113,9 @@ export default function TestPlanPage() {
                         
                         <div className="flex flex-col gap-3">
                             {testPlan.map((t) => (
-                                <div key={t.id} className="bg-white border border-[#E2E8F0] rounded-[13px] p-4 flex items-center justify-between gap-4 shadow-sm">
+                                <div key={t.id} className="bg-white border border-[#E2E8F0] rounded-[13px] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
                                     <div className="flex items-center gap-3.5">
-                                        <div className="w-10 h-10 bg-[#F1F5F9] border border-[#E2E8F0] text-[#0F172A] rounded-[11px] grid place-items-center text-sm shadow-[inset_1px_1px_3px_#CBD5E1]">
+                                        <div className="w-10 h-10 bg-[#F8FAFC] border border-[#E2E8F0] text-[#0F172A] rounded-[11px] grid place-items-center text-sm shrink-0">
                                             <i className={t.icon}></i>
                                         </div>
                                         <div>
@@ -126,7 +126,7 @@ export default function TestPlanPage() {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-3 self-end sm:self-center">
                                         <span className={`status-badge ${
                                             t.status === 'REQUIRED' ? 'status-pass' : t.status === 'IF_APPLICABLE' ? 'status-pending' : 'status-fail'
                                         }`}>
@@ -142,11 +142,11 @@ export default function TestPlanPage() {
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="flex items-center justify-between bg-white p-4 rounded-[13px] border border-[#E2E8F0] shadow-sm">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-4 rounded-[13px] border border-[#E2E8F0] shadow-sm">
                         <div className="text-xs font-bold text-[#166534]">
                             <i className="fas fa-check-circle mr-1.5"></i> {requiredCount} required test modules ready for execution
                         </div>
-                        <button className="btn px-6 py-2.5 text-xs tracking-wider uppercase font-bold" onClick={handleConfirm}>
+                        <button className="btn px-6 py-2.5 text-xs tracking-wider uppercase font-bold w-full sm:w-auto" onClick={handleConfirm}>
                             Confirm Plan & Begin Execution <i className="fas fa-arrow-right"></i>
                         </button>
                     </div>
