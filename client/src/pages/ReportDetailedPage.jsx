@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext';
 import { SkeletonReportPage } from '../components/SkeletonLoader';
 import { getOptimizedCloudinaryUrl } from '../utils/cloudinaryUrl';
 
+import { exportReportToDoc, exportReportToJson } from '../utils/exportUtils';
+
 export default function ReportDetailedPage() {
     const { id } = useParams();
     const { authFetch, user } = useAuth();
@@ -99,7 +101,13 @@ export default function ReportDetailedPage() {
                                 Detailed readings, error calculations, and photo evidence submitted for review.
                             </p>
                         </div>
-                        <div className="flex gap-2.5 items-center">
+                        <div className="flex gap-2.5 items-center flex-wrap">
+                            <button className="btn-secondary px-3.5 py-2 text-xs font-bold" onClick={() => exportReportToDoc(report)} title="Export Editable Word Document">
+                                <i className="fas fa-file-word text-[#2563EB]"></i> Export Word (.doc)
+                            </button>
+                            <button className="btn-secondary px-3.5 py-2 text-xs font-bold" onClick={() => exportReportToJson(report)} title="Export Raw JSON Data">
+                                <i className="fas fa-file-code text-[#0D9488]"></i> Export JSON
+                            </button>
                             {user?.role === 'admin' && (
                                 <button className="btn px-4 py-2 text-xs font-bold" onClick={() => window.open(`/certificate/${report._id}`, '_blank')}>
                                     <i className="fas fa-file-pdf"></i> Printable Certificate
