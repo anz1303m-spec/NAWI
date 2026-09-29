@@ -25,14 +25,14 @@ export default function LandingPage() {
                 </p>
 
                 <div className="flex flex-wrap gap-4 justify-center items-center">
-                    <Link 
-                        to={user ? (user.role === 'admin' ? '/admin' : user.role === 'viewer' ? '/viewer' : '/home') : '/login'} 
+                    <Link
+                        to={user ? (user.role === 'admin' ? '/admin' : user.role === 'viewer' ? '/viewer' : '/home') : '/login'}
                         className="btn px-7 py-3 text-sm font-bold"
                     >
                         {user ? 'Open Workspace Portal' : 'Access Verification System'} <i className="fas fa-arrow-right"></i>
                     </Link>
-                    <a 
-                        href="#how-it-works" 
+                    <a
+                        href="#how-it-works"
                         className="btn-secondary px-6 py-3 text-sm font-bold"
                     >
                         Review Evaluation Workflow
@@ -190,11 +190,11 @@ export default function LandingPage() {
 
                         <ul className="list-none p-0 m-0 space-y-4">
                             {[
-                                "Every evaluation cites the corresponding OIML R 76-1 clause with calculated error margins",
-                                "Multi-tier maker, checker, and approver review chain required for official certificate release",
-                                "Comprehensive audit log capturing initial entries, reviewer comments, and revision timestamps",
-                                "Version-aware rules engine maintaining validity under governing standards at time of test",
-                                "Cryptographic SHA-256 seal embedded on certificate for public mathematical verification"
+                                "Separate test engineer, reviewer, and admin approvals required before certificate release",
+                                "Versioned OIML rulesets preserve certificate validity under the standards applicable at the time of testing",
+                                "Detailed evaluation evidence includes readings, calculations, and supporting photo proof",
+                                "Automated test suite validates r76engine.js against OIML published worked examples",
+                                "Server-side role enforcement protects every API endpoint from unauthorized access"
                             ].map((text, idx) => (
                                 <li key={idx} className="flex items-start gap-3 text-xs text-[#0F172A] font-semibold leading-relaxed">
                                     <i className="fas fa-check text-[#166534] mt-0.5"></i>
