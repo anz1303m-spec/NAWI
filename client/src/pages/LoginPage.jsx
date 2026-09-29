@@ -33,24 +33,24 @@ export default function LoginPage() {
             <Navbar />
 
             <div className="flex-1 flex items-center justify-center p-6">
-                {/* Auth Card: Convex Tactile Relief */}
-                <div className="bg-white p-8 md:p-10 rounded-[14px] border border-[#E2E8F0] shadow-sm max-w-md w-full">
+                {/* Auth Card */}
+                <div className="bg-white p-8 md:p-10 rounded-[16px] border border-[#E2E8F0] shadow-sm max-w-md w-full">
                     {/* Brand Header */}
-                    <div className="text-center mb-7">
-                        <div className="w-13 h-13 bg-[#0F172A] rounded-[13px] grid place-items-center text-white text-xl mx-auto mb-4 shadow-sm">
+                    <div className="text-center mb-6">
+                        <div className="w-14 h-14 bg-[#2563EB] rounded-[16px] grid place-items-center text-white text-2xl mx-auto mb-5 shadow-sm">
                             <i className="fas fa-balance-scale-right"></i>
                         </div>
-                        <h2 className="text-xl font-bold text-[#0F172A] mb-1 font-['Outfit'] uppercase tracking-tight">
-                            Officer Authentication
+                        <h2 className="text-2xl font-bold text-[#0F172A] mb-1.5 font-['Outfit'] tracking-tight">
+                            Secure Login
                         </h2>
                         <p className="text-[#64748B] text-xs">
-                            Sign in to access official NAWI verification and inspection records
+                            Sign in to access your NAWI verification workspace
                         </p>
                     </div>
 
                     {/* Error Banner */}
                     {error && (
-                        <div className="bg-[#FEE2E2] border border-[#FECACA] text-[#991B1B] px-4 py-2.5 rounded-[13px] mb-5 text-xs font-bold">
+                        <div className="bg-[#FEE2E2] border border-[#FECACA] text-[#991B1B] px-4 py-2.5 rounded-[12px] mb-5 text-xs font-bold">
                             <i className="fas fa-exclamation-circle mr-1.5"></i> {error}
                         </div>
                     )}
@@ -59,12 +59,12 @@ export default function LoginPage() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-[11px] font-bold text-[#0F172A] uppercase tracking-wider mb-1.5">
-                                Official Email Address
+                                EMAIL ADDRESS
                             </label>
                             <input
                                 type="email"
-                                className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] text-xs text-[#0F172A] shadow-[inset_1px_1px_3px_#CBD5E1] focus:border-[#2563EB] outline-none transition-all"
-                                placeholder="officer@metrology.gov.in"
+                                className="w-full px-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-[10px] text-xs text-[#0F172A] placeholder-[#94A3B8] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] outline-none transition-all"
+                                placeholder="name@organization.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -73,11 +73,11 @@ export default function LoginPage() {
 
                         <div>
                             <label className="block text-[11px] font-bold text-[#0F172A] uppercase tracking-wider mb-1.5">
-                                Password
+                                PASSWORD
                             </label>
                             <input
                                 type="password"
-                                className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[13px] text-xs text-[#0F172A] shadow-[inset_1px_1px_3px_#CBD5E1] focus:border-[#2563EB] outline-none transition-all"
+                                className="w-full px-3.5 py-2.5 bg-white border border-[#CBD5E1] rounded-[10px] text-xs text-[#0F172A] placeholder-[#94A3B8] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] outline-none transition-all"
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -87,19 +87,19 @@ export default function LoginPage() {
 
                         <button 
                             type="submit" 
-                            className="btn w-full mt-3 py-3 text-xs tracking-wider uppercase font-bold" 
+                            className="w-full mt-2 py-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-semibold rounded-[10px] shadow-sm transition-all flex items-center justify-center gap-2" 
                             disabled={submitting}
                         >
                             {submitting ? (
                                 <>
-                                    <i className="fas fa-spinner fa-spin"></i> Authenticating Credentials...
+                                    <i className="fas fa-spinner fa-spin"></i> Signing in...
                                 </>
-                            ) : 'Authorize Session'}
+                            ) : 'Sign In'}
                         </button>
                     </form>
 
-                    <div className="mt-6 pt-5 border-t border-[#DED7C8] text-center text-[#7A7469] text-[11px]">
-                        <i className="fas fa-shield-alt mr-1"></i> Role-Based Access Control: Verification, Review, Sealing
+                    <div className="mt-6 pt-4 text-center text-[#64748B] text-[11px] flex items-center justify-center gap-1.5">
+                        <i className="fas fa-shield-alt"></i> Encrypted JWT Authentication • Legal Metrology Governance
                     </div>
                 </div>
             </div>

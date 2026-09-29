@@ -4,11 +4,11 @@
 
 :root {
     /* Cool-Toned Architectural Soft UI Palette */
-    --bg-base: #F8FAFC;
-    /* Base light cool slate/white */
-    --bg-recessed: #EDF2F7;
+    --bg-base: #F0F4F8;
+    /* Cooler white/light slate background */
+    --bg-recessed: #E2E8F0;
     /* Recessed areas, inputs, data wells */
-    --border-divider: #E2E8F0;
+    --border-divider: #CBD5E1;
     /* Crisp cool architectural borders */
     --charcoal-solid: #0F172A;
     /* Slate-900 for high-contrast primary text */
