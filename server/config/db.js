@@ -63,9 +63,13 @@ const connectDB = async () => {
         return cachedDb;
     }
 
-    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.MONGO_DB || "mongodb://127.0.0.1:27017/nawi_test_db";
+    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.MONGO_DB;
+    if (!mongoUri && process.env.NODE_ENV === "production") {
+        throw new Error("MONGODB_URI environment variable is missing on Vercel. Please add MONGODB_URI in Vercel Environment Variables.");
+    }
+    const finalUri = mongoUri || "mongodb://127.0.0.1:27017/nawi_test_db";
 
-    const db = await mongoose.connect(mongoUri, {
+    const db = await mongoose.connect(finalUri, {
         serverSelectionTimeoutMS: 5000,
         bufferCommands: true,
     });

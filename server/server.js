@@ -35,7 +35,7 @@ app.use(async (req, res, next) => {
         next();
     } catch (err) {
         console.error("❌ Database Connection Error:", err.message);
-        res.status(500).json({ error: "Database connection failed. Please ensure 0.0.0.0/0 is added to MongoDB Atlas Network Access." });
+        res.status(500).json({ error: `Database Connection Error: ${err.message}` });
     }
 });
 
