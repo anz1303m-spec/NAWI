@@ -365,32 +365,31 @@ export default function AdminDashboardPage() {
                     {/* TAB 1: OVERVIEW */}
                     {activeTab === 'overview' && (
                         <div>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '18px', marginBottom: '28px' }}>
-                                <div className="form-card" style={{ padding: '20px', margin: 0, background: '#F4F0E8', border: '1px solid #DED7C8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF' }}>
-                                    <h2 style={{ fontSize: '2rem', color: '#1C1A17', margin: 0, padding: 0, border: 'none', fontFamily: 'IBM Plex Mono, monospace' }}>{stats.total}</h2>
-                                    <p style={{ color: '#5C5852', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Total Tests Submitted</p>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-7">
+                                <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-xs">
+                                    <h2 className="text-2xl md:text-3xl font-extrabold text-[#0F172A] mb-0.5 font-['IBM_Plex_Mono']">{stats.total}</h2>
+                                    <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">Total Evaluations</p>
                                 </div>
 
                                 <div 
-                                    className="form-card" 
-                                    style={{ padding: '20px', margin: 0, borderLeft: '4px solid #1C1A17', borderTop: '1px solid #DED7C8', borderRight: '1px solid #DED7C8', borderBottom: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF', cursor: 'pointer' }}
+                                    className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-xs cursor-pointer hover:border-[#2563EB] transition-colors"
                                     onClick={() => { setActiveTab('applications'); setAppSubTab('pending'); }}
                                 >
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <h2 style={{ fontSize: '2rem', color: '#8C5815', margin: 0, padding: 0, border: 'none', fontFamily: 'IBM Plex Mono, monospace' }}>{pendingApps.length}</h2>
-                                        <span style={{ fontSize: '0.75rem', background: '#EAE4D6', color: '#8C5815', border: '1px solid #DED7C8', padding: '4px 8px', borderRadius: '13px', fontWeight: 700 }}>Action Required</span>
+                                    <div className="flex justify-between items-center">
+                                        <h2 className="text-2xl md:text-3xl font-extrabold text-[#92400E] mb-0.5 font-['IBM_Plex_Mono']">{pendingApps.length}</h2>
+                                        <span className="status-badge status-pending text-[9px]">Action Required</span>
                                     </div>
-                                    <p style={{ color: '#5C5852', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Pending Application Reviews</p>
+                                    <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0 mt-1">Pending Admin Review</p>
                                 </div>
 
-                                <div className="form-card" style={{ padding: '20px', margin: 0, borderLeft: '4px solid #2D5A27', borderTop: '1px solid #DED7C8', borderRight: '1px solid #DED7C8', borderBottom: '1px solid #DED7C8', background: '#F4F0E8', borderRadius: '13px', boxShadow: '4px 4px 10px #DBD3C3, -4px -4px 10px #FFFFFF' }}>
-                                    <h2 style={{ fontSize: '2rem', color: '#2D5A27', margin: 0, padding: 0, border: 'none', fontFamily: 'IBM Plex Mono, monospace' }}>{stats.certified || certifiedApps.length}</h2>
-                                    <p style={{ color: '#5C5852', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Official Certificates Issued</p>
+                                <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-xs">
+                                    <h2 className="text-2xl md:text-3xl font-extrabold text-[#166534] mb-0.5 font-['IBM_Plex_Mono']">{stats.certified || certifiedApps.length}</h2>
+                                    <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">Certificates Issued</p>
                                 </div>
 
-                                <div className="form-card" style={{ padding: '20px', margin: 0, borderLeft: '4px solid #0F172A', borderTop: '1px solid #E2E8F0', borderRight: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0', background: '#FFFFFF', borderRadius: '13px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-                                    <h2 style={{ fontSize: '2rem', color: '#0F172A', margin: 0, padding: 0, border: 'none', fontFamily: 'IBM Plex Mono, monospace' }}>{stats.users}</h2>
-                                    <p style={{ color: '#64748B', fontSize: '0.85rem', marginTop: '4px', fontWeight: 600 }}>Active System Officers</p>
+                                <div className="bg-white p-5 rounded-[14px] border border-[#E2E8F0] shadow-xs">
+                                    <h2 className="text-2xl md:text-3xl font-extrabold text-[#0F172A] mb-0.5 font-['IBM_Plex_Mono']">{stats.users}</h2>
+                                    <p className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider m-0">Active System Officers</p>
                                 </div>
                             </div>
 
