@@ -28,8 +28,16 @@ app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.use(cookieParser());
 
-// Initialize DB connection
-connectDB().catch(err => console.error("❌ Startup MongoDB Connection Error:", err.message));
+// Ensure Database Connection for every request (essential for Vercel serverless)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        console.error("❌ Database Connection Error:", err.message);
+        res.status(500).json({ error: "Database connection failed. Please ensure 0.0.0.0/0 is added to MongoDB Atlas Network Access." });
+    }
+});
 
 // Mount API Routes
 app.use("/api", authRoutes);
