@@ -179,9 +179,20 @@ const verifyReport = async (req, res) => {
             }
         }
 
-        // Determine workflow authorization status: must be APPROVED, CERTIFIED, or ISSUED by Admin to be CONFIRMED
-        const isApproved = ["APPROVED", "CERTIFIED", "ISSUED"].includes(report.workflow_status);
-        const verificationStatus = isTampered ? "TAMPERED" : (isApproved ? "VERIFIED" : "PENDING_APPROVAL");
+        // Determine workflow authorization stage
+        const isApprovedByReviewer = ["PENDING_ADMIN_APPROVAL", "APPROVED", "CERTIFIED", "ISSUED"].includes(report.workflow_status);
+        const isCertifiedByAdmin = ["APPROVED", "CERTIFIED", "ISSUED"].includes(report.workflow_status);
+        
+        let verificationStatus = "PENDING_REVIEWER_APPROVAL";
+        if (isTampered) {
+            verificationStatus = "TAMPERED";
+        } else if (isCertifiedByAdmin) {
+            verificationStatus = "VERIFIED";
+        } else if (isApprovedByReviewer) {
+            verificationStatus = "PENDING_ADMIN_APPROVAL";
+        } else {
+            verificationStatus = "PENDING_REVIEWER_APPROVAL";
+        }
 
         if (isTampered) {
             return res.json({
@@ -194,7 +205,8 @@ const verifyReport = async (req, res) => {
         res.json({
             status: verificationStatus,
             workflowStatus: report.workflow_status || "SUBMITTED",
-            isApproved,
+            isApproved: isCertifiedByAdmin,
+            isApprovedByReviewer,
             reportId: `TP-${report._id.toString().substring(0, 8).toUpperCase()}`,
             rawId: report._id,
             isSuperseded: report.report_status === "SUPERSEDED",

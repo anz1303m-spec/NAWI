@@ -120,16 +120,20 @@ export default function PublicVerifyPage() {
                                 Enter an official certificate ID above or scan the QR code printed on the physical certificate to query its mathematical seal and test observations.
                             </p>
                         </div>
-                    ) : data?.status === 'PENDING_APPROVAL' ? (
-                        /* PENDING VERIFICATION APPROVAL STATE */
+                    ) : (data?.status === 'PENDING_REVIEWER_APPROVAL' || data?.status === 'PENDING_ADMIN_APPROVAL' || data?.status === 'PENDING_APPROVAL') ? (
+                        /* PENDING VERIFICATION / REVIEWER APPROVAL STATE */
                         <div className="space-y-4">
                             <div className="bg-[#FEF3C7] border border-[#FDE68A] rounded-[14px] p-4 text-center shadow-sm">
                                 <span className="inline-block text-lg mb-1 text-[#92400E]"><i className="fas fa-hourglass-half"></i></span>
                                 <h2 className="text-sm font-bold text-[#92400E] m-0 uppercase tracking-wide font-['Outfit']">
-                                    Verification Pending Official Approval
+                                    {data?.status === 'PENDING_REVIEWER_APPROVAL' 
+                                        ? 'Verification Pending Reviewer Approval' 
+                                        : 'Verification Pending Verifier Sign-off'}
                                 </h2>
                                 <p className="text-[11px] text-[#B45309] font-semibold mt-1 mb-0">
-                                    Readings and observations submitted. Awaiting quality reviewer and verifier sign-off before official certificate release.
+                                    {data?.status === 'PENDING_REVIEWER_APPROVAL' 
+                                        ? 'Test observations & readings submitted by Inspection Officer. Pending Quality Reviewer audit and approval.' 
+                                        : 'Quality reviewer approved observations. Pending final Verifier Admin sign-off and certificate release.'}
                                 </p>
                             </div>
 
